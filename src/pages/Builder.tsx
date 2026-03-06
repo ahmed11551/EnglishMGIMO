@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { getCardsByIds } from '../data/cards';
 import { useApp } from '../context/AppContext';
+import { IconSparkle } from '../components/Icons';
 import type { ReviewQuality } from '../types';
 import './Builder.css';
 
@@ -103,7 +104,7 @@ export function Builder() {
   if (done) {
     return (
       <div className="builder builder-done">
-        <div className="builder-done-illo" aria-hidden>✨</div>
+        <div className="builder-done-illo" aria-hidden><IconSparkle /></div>
         <p className="builder-done-title">Сессия завершена</p>
         {lastSessionSize > 0 && (
           <p className="builder-done-count">Собрано слов: {lastSessionSize}</p>

@@ -234,7 +234,14 @@
 }
 
 .home-streak-icon {
+  display: inline-flex;
+  align-items: center;
   font-size: 1.1rem;
+}
+
+.home-streak-icon .app-icon {
+  width: 1em;
+  height: 1em;
 }
 
 .home-streak-num {
@@ -303,9 +310,16 @@
 }
 
 .home-quick-chip-icon {
+  display: inline-flex;
+  align-items: center;
   font-size: 1.25rem;
   line-height: 1;
   flex-shrink: 0;
+}
+
+.home-quick-chip-icon .app-icon {
+  width: 1em;
+  height: 1em;
 }
 
 .home-quick-chip-name {
@@ -341,11 +355,16 @@
   width: 28px;
   height: 28px;
   margin-right: 8px;
-  font-size: 0.9375rem;
+  font-size: 28px;
   background: var(--color-accent-soft);
   border: none;
   border-radius: var(--radius-full);
   flex-shrink: 0;
+}
+
+.home-section-icon .app-icon {
+  width: 100%;
+  height: 100%;
 }
 
 .home-calendar {
@@ -547,9 +566,17 @@
 }
 
 .module-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.6rem;
   line-height: 1;
   opacity: 0.95;
+}
+
+.module-card-icon .app-icon {
+  width: 1em;
+  height: 1em;
 }
 
 .module-card-body {

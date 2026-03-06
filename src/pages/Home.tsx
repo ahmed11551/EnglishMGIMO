@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 import { getCardById } from '../data/cards';
 import { getGreeting, getRandomGoalPhrase, getRandomTip } from '../utils/greeting';
 import { EmptyStateIllustration } from '../components/EmptyStateIllustration';
+import { IconLightning, IconCalendar, IconBook, IconFolder, IconFlame, IconModule } from '../components/Icons';
 import './Home.css';
 
 const ESTIMATED_MINUTES = 5; // как в 10 Minute English / WRD — короткая сессия
@@ -31,7 +32,7 @@ export function Home() {
   return (
     <div className="home home-easyten">
       <div className="home-hero animate-fade-in">
-        <p className="home-greeting">{greeting} 👋</p>
+        <p className="home-greeting">{greeting}</p>
         <p className="home-tip">{dailyTip}</p>
       </div>
       <section className={`home-today animate-fade-in ${goalReached ? 'home-today-done' : ''}`}>
@@ -60,7 +61,7 @@ export function Home() {
         {hasNoProgress && <p className="home-today-message home-today-hint">5 минут в день — и слова запомнятся</p>}
         {streak > 0 && (
           <div className="home-streak">
-            <span className="home-streak-icon">🔥</span>
+            <span className="home-streak-icon"><IconFlame /></span>
             <span className="home-streak-num">{streak}</span>
             <span className="home-streak-text">дней подряд</span>
           </div>
@@ -78,7 +79,7 @@ export function Home() {
 
       <section className="home-quick-access animate-fade-in animate-delay-1">
         <h3 className="home-quick-access-title">
-          <span className="home-section-icon" aria-hidden>⚡</span>
+          <span className="home-section-icon" aria-hidden><IconLightning /></span>
           Быстрый доступ
         </h3>
         <div className="home-quick-access-list">
@@ -92,7 +93,7 @@ export function Home() {
                 className="home-quick-chip"
                 style={{ '--chip-color': mod.coverColor } as React.CSSProperties}
               >
-                <span className="home-quick-chip-icon" aria-hidden>{mod.icon}</span>
+                <span className="home-quick-chip-icon" aria-hidden><IconModule /></span>
                 <span className="home-quick-chip-name">{mod.titleRu}</span>
                 {due > 0 && <span className="home-quick-chip-due">{due}</span>}
               </Link>
@@ -103,7 +104,7 @@ export function Home() {
 
       <section className="home-calendar animate-fade-in animate-delay-2">
         <h3 className="home-calendar-title">
-          <span className="home-section-icon" aria-hidden>📅</span>
+          <span className="home-section-icon" aria-hidden><IconCalendar /></span>
           Неделя
         </h3>
         <div className="home-calendar-strip">
@@ -126,7 +127,7 @@ export function Home() {
       {todayCards.length > 0 ? (
         <section className="home-words-preview animate-fade-in animate-delay-3">
           <h3 className="home-words-title">
-            <span className="home-section-icon" aria-hidden>📖</span>
+            <span className="home-section-icon" aria-hidden><IconBook /></span>
             Слова на сегодня
           </h3>
           <ul className="home-words-list">
@@ -155,7 +156,7 @@ export function Home() {
 
       <section className="home-modules animate-fade-in animate-delay-4">
         <h3 className="home-modules-title">
-          <span className="home-section-icon" aria-hidden>📂</span>
+          <span className="home-section-icon" aria-hidden><IconFolder /></span>
           Модули
         </h3>
         <nav className="module-list" aria-label="Модули">
@@ -170,7 +171,7 @@ export function Home() {
                 style={{ '--module-color': mod.coverColor } as React.CSSProperties}
               >
                 <div className="module-card-icon-wrap">
-                  <span className="module-card-icon" aria-hidden>{mod.icon}</span>
+                  <span className="module-card-icon" aria-hidden><IconModule /></span>
                 </div>
                 <div className="module-card-body">
                   <div className="module-card-header">

@@ -38,11 +38,26 @@
 }
 
 .pronounce-listen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   margin-bottom: 16px;
 }
 
+.pronounce-listen .app-icon,
+.pronounce-mic-btn .app-icon {
+  width: 1.2em;
+  height: 1.2em;
+  color: currentColor;
+}
+
 .pronounce-mic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   padding: 20px;
   font-size: 1.1rem;

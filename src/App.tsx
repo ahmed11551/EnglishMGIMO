@@ -17,6 +17,7 @@ const Listen = lazy(() => import('./pages/Listen').then((m) => ({ default: m.Lis
 const Pronounce = lazy(() => import('./pages/Pronounce').then((m) => ({ default: m.Pronounce })));
 const Stats = lazy(() => import('./pages/Stats').then((m) => ({ default: m.Stats })));
 const Topics = lazy(() => import('./pages/Topics').then((m) => ({ default: m.Topics })));
+const Settings = lazy(() => import('./pages/Settings').then((m) => ({ default: m.Settings })));
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })));
 const Privacy = lazy(() => import('./pages/Privacy').then((m) => ({ default: m.Privacy })));
 
@@ -41,6 +42,7 @@ function AppRoutes() {
         <Route path="/module/:moduleId/pronounce" element={<Layout><Pronounce /></Layout>} />
         <Route path="/topics" element={<Layout><Topics /></Layout>} />
         <Route path="/stats" element={<Layout><Stats /></Layout>} />
+        <Route path="/settings" element={<Layout><Settings /></Layout>} />
         <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
         <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>

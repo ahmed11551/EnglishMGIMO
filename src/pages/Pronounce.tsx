@@ -5,6 +5,7 @@ import { getCardsByIds } from '../data/cards';
 import { useApp } from '../context/AppContext';
 import { playTerm } from '../utils/audio';
 import { recognizeSpeech, isMatch, isSpeechRecognitionSupported } from '../utils/speechRecognition';
+import { IconSpeaker, IconMic } from '../components/Icons';
 import './Pronounce.css';
 
 function shuffle<T>(arr: T[]): T[] {
@@ -122,11 +123,11 @@ export function Pronounce() {
       <p className="pronounce-term">{currentCard.term}</p>
       {currentCard.transcription && <p className="pronounce-transcription">{currentCard.transcription}</p>}
       <button type="button" className="btn btn-secondary pronounce-listen" onClick={handleListen}>
-        🔊 Прослушать образец
+        <><IconSpeaker /> Прослушать образец</>
       </button>
       {status !== 'listening' && status !== 'result' && (
         <button type="button" className="pronounce-mic-btn" onClick={handleRecord} aria-label="Записать">
-          🎤 Произнесите термин
+          <><IconMic /> Произнесите термин</>
         </button>
       )}
       {status === 'listening' && <p className="pronounce-status">Говорите...</p>}

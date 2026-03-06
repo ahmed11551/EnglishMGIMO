@@ -5,12 +5,14 @@ const titles: Record<string, string> = {
   '/': APP_NAME,
   '/topics': 'Темы',
   '/stats': 'Прогресс',
+  '/settings': 'Настройки',
 };
 
 function getTitle(pathname: string): string {
   if (pathname === '/') return titles['/'] ?? APP_NAME;
   if (pathname.startsWith('/topics')) return titles['/topics'] ?? 'Темы';
   if (pathname.startsWith('/stats')) return titles['/stats'] ?? 'Прогресс';
+  if (pathname.startsWith('/settings')) return titles['/settings'] ?? 'Настройки';
   if (pathname.startsWith('/privacy')) return 'Политика конфиденциальности';
   if (pathname.includes('/flash')) return 'Флэш-карты';
   if (pathname.includes('/trainer')) return 'Тренажёр';
@@ -24,7 +26,7 @@ function getTitle(pathname: string): string {
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const title = getTitle(location.pathname);
-  const showBack = location.pathname !== '/' && !location.pathname.startsWith('/stats') && !location.pathname.startsWith('/topics') && !location.pathname.startsWith('/privacy');
+  const showBack = location.pathname !== '/' && !location.pathname.startsWith('/stats') && !location.pathname.startsWith('/topics') && !location.pathname.startsWith('/settings') && !location.pathname.startsWith('/privacy');
 
   return (
     <>

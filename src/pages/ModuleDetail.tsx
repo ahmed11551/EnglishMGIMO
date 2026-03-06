@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { useApp } from '../context/AppContext';
+import { IconModule, IconCards, IconPencil, IconLetters, IconSpeaker, IconMic } from '../components/Icons';
 import './ModuleDetail.css';
 
 export function ModuleDetail() {
@@ -29,7 +30,7 @@ export function ModuleDetail() {
     <div className="module-detail">
       <div className="module-detail-header" style={{ background: module.coverColor }}>
         <div className="module-detail-icon-wrap" aria-hidden>
-          <span className="module-detail-icon">{module.icon}</span>
+          <span className="module-detail-icon"><IconModule /></span>
         </div>
         <h1>{module.titleRu}</h1>
         <p className="module-detail-en">{module.title}</p>
@@ -45,7 +46,7 @@ export function ModuleDetail() {
           to={`/module/${module.id}/flash`}
           className="action-card card-surface"
         >
-          <span className="action-card-icon">🃏</span>
+          <span className="action-card-icon"><IconCards /></span>
           <span className="action-card-title">Флэш-карты</span>
           <span className="action-card-desc">Быстрое пролистывание</span>
         </Link>
@@ -53,7 +54,7 @@ export function ModuleDetail() {
           to={`/module/${module.id}/trainer`}
           className="action-card card-surface"
         >
-          <span className="action-card-icon">✏️</span>
+          <span className="action-card-icon"><IconPencil /></span>
           <span className="action-card-title">Тренажёр</span>
           <span className="action-card-desc">Выбор правильного перевода из 4 вариантов</span>
         </Link>
@@ -61,7 +62,7 @@ export function ModuleDetail() {
           to={`/module/${module.id}/builder`}
           className="action-card card-surface"
         >
-          <span className="action-card-icon">🔤</span>
+          <span className="action-card-icon"><IconLetters /></span>
           <span className="action-card-title">Конструктор</span>
           <span className="action-card-desc">Соберите термин из букв по переводу</span>
         </Link>
@@ -69,7 +70,7 @@ export function ModuleDetail() {
           to={`/module/${module.id}/listen`}
           className="action-card card-surface"
         >
-          <span className="action-card-icon">🔊</span>
+          <span className="action-card-icon"><IconSpeaker /></span>
           <span className="action-card-title">Аудирование</span>
           <span className="action-card-desc">Прослушайте термин и выберите перевод</span>
         </Link>
@@ -77,7 +78,7 @@ export function ModuleDetail() {
           to={`/module/${module.id}/pronounce`}
           className="action-card card-surface"
         >
-          <span className="action-card-icon">🎤</span>
+          <span className="action-card-icon"><IconMic /></span>
           <span className="action-card-title">Произношение</span>
           <span className="action-card-desc">Произнесите термин — проверка через микрофон</span>
         </Link>

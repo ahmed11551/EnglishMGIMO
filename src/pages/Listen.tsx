@@ -4,6 +4,7 @@ import { MODULES } from '../data/modules';
 import { getCardsByIds } from '../data/cards';
 import { useApp } from '../context/AppContext';
 import { playTerm } from '../utils/audio';
+import { IconSpeaker, IconSpinner } from '../components/Icons';
 import type { Card } from '../types';
 import type { ReviewQuality } from '../types';
 import './Listen.css';
@@ -116,7 +117,7 @@ export function Listen() {
         disabled={playing}
         aria-label="Прослушать"
       >
-        {playing ? '⏳' : '🔊'} {playing ? 'Звучит...' : 'Воспроизвести'}
+        {playing ? <><IconSpinner /> Звучит...</> : <><IconSpeaker /> Воспроизвести</>}
       </button>
       <div className="listen-options">
         {options.map((card) => {

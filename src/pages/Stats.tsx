@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { useApp } from '../context/AppContext';
+import { IconFlame, IconModule } from '../components/Icons';
 import './Stats.css';
 
 export function Stats() {
@@ -38,7 +39,9 @@ export function Stats() {
         </div>
         <div className={`stats-row ${streak > 0 ? 'stats-row-streak' : ''}`}>
           <span className="stats-label">Серия дней</span>
-          <span className="stats-value">{streak > 0 ? `${streak} 🔥` : '0'}</span>
+          <span className="stats-value stats-value-streak">
+            {streak > 0 ? <><IconFlame /><span>{streak}</span></> : '0'}
+          </span>
         </div>
         <div className="stats-row">
           <span className="stats-label">Выучено слов</span>
@@ -58,7 +61,7 @@ export function Stats() {
           return (
             <li key={mod.id} className="stats-module card-surface" style={{ borderLeftColor: mod.coverColor }}>
               <div className="stats-module-header">
-                <span className="stats-module-icon" style={{ background: `color-mix(in srgb, ${mod.coverColor} 12%, transparent)`, borderColor: `color-mix(in srgb, ${mod.coverColor} 22%, transparent)` }} aria-hidden>{mod.icon}</span>
+                <span className="stats-module-icon" style={{ background: `color-mix(in srgb, ${mod.coverColor} 12%, transparent)`, borderColor: `color-mix(in srgb, ${mod.coverColor} 22%, transparent)` }} aria-hidden><IconModule /></span>
                 <span className="stats-module-title">{mod.titleRu}</span>
                 <span className="stats-module-count">{stats.learnedCount} / {stats.totalCount}</span>
               </div>

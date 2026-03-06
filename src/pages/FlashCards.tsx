@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { getCardsByIds } from '../data/cards';
 import { playTerm } from '../utils/audio';
+import { IconSpeaker } from '../components/Icons';
 import './FlashCards.css';
 
 export function FlashCards() {
@@ -47,7 +48,7 @@ export function FlashCards() {
           <div className="flash-card-front">
             <span className="flash-term">{card.term}</span>
             {card.transcription && <span className="flash-transcription">{card.transcription}</span>}
-            <button type="button" className="flash-audio-btn" onClick={(e) => { e.stopPropagation(); playTerm(card.term, card.audioUrl).catch(() => {}); }} aria-label="Прослушать">🔊</button>
+            <button type="button" className="flash-audio-btn" onClick={(e) => { e.stopPropagation(); playTerm(card.term, card.audioUrl).catch(() => {}); }} aria-label="Прослушать"><IconSpeaker /></button>
             <span className="flash-hint">Нажмите, чтобы перевернуть</span>
           </div>
           <div className="flash-card-back">

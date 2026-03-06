@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { useApp } from '../context/AppContext';
+import { IconModule } from '../components/Icons';
 import './Topics.css';
 
 /** Страница «Темы» — быстрый доступ ко всем модулям (как в WRD / 10 Minute English) */
@@ -24,7 +25,7 @@ export function Topics() {
               style={{ '--topic-color': mod.coverColor } as React.CSSProperties}
             >
               <div className="topics-card-icon-wrap">
-                <span className="topics-card-icon" aria-hidden>{mod.icon}</span>
+                <span className="topics-card-icon" aria-hidden><IconModule /></span>
               </div>
               <div className="topics-card-body">
                 <span className="topics-card-title">{mod.titleRu}</span>

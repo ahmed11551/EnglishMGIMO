@@ -5,6 +5,7 @@ const STORAGE_KEY_STATS = 'dv_stats';
 const STORAGE_KEY_LAST_SYNC = 'dv_last_sync';
 const STORAGE_KEY_DAILY = 'dv_daily';
 const STORAGE_KEY_LAST_MODULE = 'dv_last_module';
+const STORAGE_KEY_DAILY_GOAL = 'dv_daily_goal';
 
 function getStorageKey(prefix: string, telegramId?: string): string {
   if (telegramId) return `${prefix}_${telegramId}`;
@@ -83,4 +84,32 @@ export function loadLastModuleId(telegramId?: string): string | null {
 export function saveLastModuleId(moduleId: string, telegramId?: string): void {
   const key = getStorageKey(STORAGE_KEY_LAST_MODULE, telegramId);
   localStorage.setItem(key, moduleId);
+}
+
+const DEFAULT_DAILY_GOAL = 10;
+
+/** Цель слов в день (настройки) */
+export function loadDailyGoal(telegramId?: string): number {
+  try {
+    const key = getStorageKey(STORAGE_KEY_DAILY_GOAL, telegramId);
+    const raw = localStorage.getItem(key);
+    if (raw == null) return DEFAULT_DAILY_GOAL;
+    const n = parseInt(raw, 10);
+    return n >= 5 && n <= 30 ? n : DEFAULT_DAILY_GOAL;
+  } catch {
+    return DEFAULT_DAILY_GOAL;
+  }
+}
+
+export function saveDailyGoal(goal: number, telegramId?: string): void {
+  const key = getStorageKey(STORAGE_KEY_DAILY_GOAL, telegramId);
+  localStorage.setItem(key, String(Math.max(5, Math.min(30, goal))));
+}
+
+/** Сброс всего прогресса (для настроек) */
+export function clearAllProgress(telegramId?: string): void {
+  localStorage.removeItem(getStorageKey(STORAGE_KEY_PROGRESS, telegramId));
+  localStorage.removeItem(getStorageKey(STORAGE_KEY_STATS, telegramId));
+  localStorage.removeItem(getStorageKey(STORAGE_KEY_DAILY, telegramId));
+  localStorage.removeItem(getStorageKey(STORAGE_KEY_LAST_MODULE, telegramId));
 }

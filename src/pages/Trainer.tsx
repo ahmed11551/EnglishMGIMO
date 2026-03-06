@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { getCardsByIds } from '../data/cards';
 import { useApp } from '../context/AppContext';
+import { IconCelebrate } from '../components/Icons';
 import type { Card } from '../types';
 import type { ReviewQuality } from '../types';
 import './Trainer.css';
@@ -59,7 +60,7 @@ export function Trainer() {
   if (queue.length === 0 && lastSessionSize > 0) {
     return (
       <div className="trainer trainer-done">
-        <div className="trainer-done-illo" aria-hidden>🎉</div>
+        <div className="trainer-done-illo" aria-hidden><IconCelebrate /></div>
         <p className="trainer-done-title">Сессия завершена</p>
         <p className="trainer-done-count">Повторено слов: {lastSessionSize}</p>
         <div className="trainer-done-actions">
@@ -86,7 +87,7 @@ export function Trainer() {
   if (!currentCard) {
     return (
       <div className="trainer trainer-done">
-        <div className="trainer-done-illo" aria-hidden>🎉</div>
+        <div className="trainer-done-illo" aria-hidden><IconCelebrate /></div>
         <p className="trainer-done-title">Сессия завершена</p>
         {lastSessionSize > 0 && (
           <p className="trainer-done-count">Повторено слов: {lastSessionSize}</p>

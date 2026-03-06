@@ -39,8 +39,17 @@
 }
 
 .module-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2rem;
   line-height: 1;
+  color: #fff;
+}
+
+.module-detail-icon .app-icon {
+  width: 1em;
+  height: 1em;
 }
 
 .module-detail-header h1 {
@@ -106,11 +115,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 48px;
   margin-bottom: 12px;
   background: var(--color-accent-soft);
   border: none;
   border-radius: var(--radius-full);
+  color: var(--color-primary);
+}
+
+.action-card-icon .app-icon {
+  width: 100%;
+  height: 100%;
 }
 
 .action-card-title {

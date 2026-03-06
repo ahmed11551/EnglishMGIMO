@@ -86,6 +86,13 @@ body {
   min-height: 100dvh;
 }
 
+.app-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -0.15em;
+}
+
 a {
   color: var(--color-accent);
   text-decoration: none;
@@ -205,6 +212,14 @@ h3 { font-size: 1.1rem; }
 @keyframes page-loader-spin {
   to { transform: rotate(360deg); }
 }
+
+.app-icon-spin {
+  animation: app-icon-spin 0.8s linear infinite;
+}
+@keyframes app-icon-spin {
+  to { transform: rotate(360deg); }
+}
+
 .page-loader-text {
   font-size: 0.9375rem;
   color: var(--color-text-muted);

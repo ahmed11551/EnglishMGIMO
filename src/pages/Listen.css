@@ -27,6 +27,10 @@
 }
 
 .listen-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   padding: 20px;
   font-size: 1.1rem;
@@ -37,6 +41,7 @@
   margin-bottom: 24px;
   transition: opacity 0.2s;
 }
+.listen-play-btn .app-icon { width: 1.2em; height: 1.2em; color: currentColor; }
 .listen-play-btn:hover:not(:disabled) { opacity: 0.9; }
 .listen-play-btn:disabled { opacity: 0.8; }
 

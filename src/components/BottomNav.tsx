@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { IconToday, IconTopics, IconProgress } from './BottomNavIcons';
+import { IconToday, IconTopics, IconProgress, IconSettings } from './BottomNavIcons';
 import './BottomNav.css';
 
 export function BottomNav() {
@@ -31,6 +31,14 @@ export function BottomNav() {
       >
         <span className="bottom-nav-icon"><IconProgress /></span>
         <span className="bottom-nav-label">Прогресс</span>
+      </Link>
+      <Link
+        to="/settings"
+        className={`bottom-nav-item ${path.startsWith('/settings') ? 'active' : ''}`}
+        aria-current={path.startsWith('/settings') ? 'page' : undefined}
+      >
+        <span className="bottom-nav-icon"><IconSettings /></span>
+        <span className="bottom-nav-label">Настройки</span>
       </Link>
     </nav>
   );

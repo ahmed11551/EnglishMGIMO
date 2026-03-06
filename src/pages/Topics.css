@@ -63,8 +63,16 @@
 }
 
 .topics-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.6rem;
   line-height: 1;
+}
+
+.topics-card-icon .app-icon {
+  width: 1em;
+  height: 1em;
 }
 
 .topics-card-body {

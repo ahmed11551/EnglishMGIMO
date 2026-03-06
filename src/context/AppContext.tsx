@@ -1,10 +1,9 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import type { CardProgress, ModuleStats, ReviewQuality } from '../types';
 import { nextReview, reviewQualityToNumber, createInitialProgress, getDueCardIds } from '../spacedRepetition';
-import { loadProgress, saveProgress, loadStats, saveStats, loadDailyLog, saveDailyLog, loadLastModuleId, saveLastModuleId } from '../storage';
+import { loadProgress, saveProgress, loadStats, saveStats, loadDailyLog, saveDailyLog, loadLastModuleId, saveLastModuleId, loadDailyGoal, saveDailyGoal, clearAllProgress } from '../storage';
 import { MODULES } from '../data/modules';
 
-const DAILY_GOAL = 10;
 
 function todayKey(): string {
   const d = new Date();
@@ -31,14 +30,16 @@ interface AppState {
   dailyLog: Record<string, number>;
   telegramId: TelegramId;
   lastModuleId: string | null;
+  dailyGoal: number;
 }
 
 interface AppContextValue extends AppState {
-  dailyGoal: number;
   learnedToday: number;
   streak: number;
   setTelegramId: (id: TelegramId) => void;
   setLastModuleId: (moduleId: string) => void;
+  setDailyGoal: (goal: number) => void;
+  resetProgress: () => void;
   recordReview: (cardId: string, moduleId: string, quality: ReviewQuality) => void;
   getProgress: (cardId: string) => CardProgress | undefined;
   getDueForModule: (moduleId: string) => string[];
@@ -54,6 +55,7 @@ const defaultState: AppState = {
   dailyLog: {},
   telegramId: undefined,
   lastModuleId: loadLastModuleId() ?? null,
+  dailyGoal: loadDailyGoal(),
 };
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -74,6 +76,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     stats: loadStats(),
     dailyLog: loadDailyLog(),
     lastModuleId: loadLastModuleId() ?? null,
+    dailyGoal: loadDailyGoal(),
   }));
 
   const refreshFromStorage = useCallback(() => {
@@ -83,6 +86,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       stats: loadStats(prev.telegramId),
       dailyLog: loadDailyLog(prev.telegramId),
       lastModuleId: loadLastModuleId(prev.telegramId) ?? null,
+      dailyGoal: loadDailyGoal(prev.telegramId),
     }));
   }, []);
 
@@ -94,6 +98,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       stats: loadStats(telegramId),
       dailyLog: loadDailyLog(telegramId),
       lastModuleId: loadLastModuleId(telegramId) ?? null,
+      dailyGoal: loadDailyGoal(telegramId),
     }));
   }, []);
 
@@ -101,6 +106,27 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState((prev) => {
       saveLastModuleId(moduleId, prev.telegramId);
       return { ...prev, lastModuleId: moduleId };
+    });
+  }, []);
+
+  const setDailyGoal = useCallback((goal: number) => {
+    const clamped = Math.max(5, Math.min(30, goal));
+    setState((prev) => {
+      saveDailyGoal(clamped, prev.telegramId);
+      return { ...prev, dailyGoal: clamped };
+    });
+  }, []);
+
+  const resetProgress = useCallback(() => {
+    setState((prev) => {
+      clearAllProgress(prev.telegramId);
+      return {
+        ...prev,
+        progress: new Map(),
+        stats: new Map(),
+        dailyLog: {},
+        lastModuleId: null,
+      };
     });
   }, []);
 
@@ -177,17 +203,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const due = getDueCardIds(state.progress, mod.cardIds);
       due.forEach((cardId) => pool.push({ cardId, moduleId: mod.id }));
     }
-    return pool.slice(0, DAILY_GOAL);
-  }, [state.progress]);
+    return pool.slice(0, state.dailyGoal);
+  }, [state.progress, state.dailyGoal]);
 
   const value = useMemo<AppContextValue>(
     () => ({
       ...state,
-      dailyGoal: DAILY_GOAL,
       learnedToday,
       streak,
       setTelegramId,
       setLastModuleId,
+      setDailyGoal,
+      resetProgress,
       recordReview,
       getProgress,
       getDueForModule,
@@ -196,7 +223,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       getCalendarDays,
       getTodayCardIds,
     }),
-    [state, learnedToday, streak, setTelegramId, setLastModuleId, recordReview, getProgress, getDueForModule, refreshFromStorage, getModuleStats, getCalendarDays, getTodayCardIds]
+    [state, learnedToday, streak, setTelegramId, setLastModuleId, setDailyGoal, resetProgress, recordReview, getProgress, getDueForModule, refreshFromStorage, getModuleStats, getCalendarDays, getTodayCardIds]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
