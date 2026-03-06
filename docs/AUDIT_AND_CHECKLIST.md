@@ -14,6 +14,7 @@
 - **PWA offline** — `navigateFallback: '/index.html'` в Workbox: при навигации без сети отдаётся кэшированный index.html, SPA работает офлайн.
 - **Иконки PWA** — в манифесте указаны `favicon.svg` и слоты для `icon-192.png`, `icon-512.png` (см. ниже).
 - **TypeScript** — проверка `getElementById('root')` перед рендером, без небезопасного `!`.
+- **Мобильный скролл** — контент скроллится в `.app-main` (overflow-y: auto, -webkit-overflow-scrolling: touch, touch-action: pan-y); body с overflow-y: hidden во избежание двойного скролла в WebView.
 
 ### 1.2 Иконки для каталога (192×192, 512×512)
 Для Telegram/«Добавить на экран» поместите в каталог `public/`:
