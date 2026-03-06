@@ -17,7 +17,11 @@ export function Privacy() {
       </section>
       <section>
         <h2>3. Контакты</h2>
-        <p>По вопросам политики конфиденциальности обращайтесь к администрации проекта.</p>
+        <p>По вопросам политики конфиденциальности и по любым другим вопросам вы можете связаться с нами:</p>
+        <p className="privacy-contact">
+          <a href="mailto:info@mgimo-english.app" className="privacy-contact-link">Написать нам</a>
+          <span className="privacy-contact-email"> (info@mgimo-english.app)</span>
+        </p>
       </section>
       <Link to="/" className="btn btn-secondary">На главную</Link>
     </div>

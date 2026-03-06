@@ -14,6 +14,7 @@ function getTitle(pathname: string): string {
   if (pathname.startsWith('/stats')) return titles['/stats'] ?? 'Прогресс';
   if (pathname.startsWith('/settings')) return titles['/settings'] ?? 'Настройки';
   if (pathname.startsWith('/privacy')) return 'Политика конфиденциальности';
+  if (pathname.startsWith('/terms')) return 'Пользовательское соглашение';
   if (pathname.includes('/flash')) return 'Флэш-карты';
   if (pathname.includes('/trainer')) return 'Тренажёр';
   if (pathname.includes('/builder')) return 'Конструктор';
@@ -26,7 +27,7 @@ function getTitle(pathname: string): string {
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const title = getTitle(location.pathname);
-  const showBack = location.pathname !== '/' && !location.pathname.startsWith('/stats') && !location.pathname.startsWith('/topics') && !location.pathname.startsWith('/settings') && !location.pathname.startsWith('/privacy');
+  const showBack = location.pathname !== '/' && !location.pathname.startsWith('/stats') && !location.pathname.startsWith('/topics') && !location.pathname.startsWith('/settings') && !location.pathname.startsWith('/privacy') && !location.pathname.startsWith('/terms');
 
   return (
     <>
@@ -43,6 +44,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="app-footer">
         <Link to="/privacy" className="app-footer-link">Политика конфиденциальности</Link>
+        <span className="app-footer-sep"> · </span>
+        <Link to="/terms" className="app-footer-link">Пользовательское соглашение</Link>
       </footer>
     </>
   );

@@ -20,6 +20,7 @@ const Topics = lazy(() => import('./pages/Topics').then((m) => ({ default: m.Top
 const Settings = lazy(() => import('./pages/Settings').then((m) => ({ default: m.Settings })));
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })));
 const Privacy = lazy(() => import('./pages/Privacy').then((m) => ({ default: m.Privacy })));
+const Terms = lazy(() => import('./pages/Terms').then((m) => ({ default: m.Terms })));
 
 function TelegramSync() {
   const { setTelegramId } = useApp();
@@ -44,6 +45,7 @@ function AppRoutes() {
         <Route path="/stats" element={<Layout><Stats /></Layout>} />
         <Route path="/settings" element={<Layout><Settings /></Layout>} />
         <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+        <Route path="/terms" element={<Layout><Terms /></Layout>} />
         <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>
     </Suspense>

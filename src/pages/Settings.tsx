@@ -55,6 +55,11 @@ export function Settings() {
               Политика конфиденциальности
             </Link>
           </li>
+          <li>
+            <Link to="/terms" className="settings-link">
+              Пользовательское соглашение
+            </Link>
+          </li>
         </ul>
       </section>
 
