@@ -1,38 +1,44 @@
-/* Тёплый живой дизайн: градиенты, мягкие тени, приветствие */
+/* МГИМО ENGLISH — дизайн 2026: свежая палитра, типографика, стекло, плавные переходы */
 :root {
-  --color-bg: #f8f6f2;
-  --color-bg-warm: #fdfcf9;
+  --color-bg: #f6f5f3;
+  --color-bg-warm: #fafaf9;
   --color-surface: #ffffff;
   --color-surface-soft: #fefefe;
-  --color-primary: #2d5016;
-  --color-primary-light: #3d6b1f;
-  --color-accent: #4a7c23;
-  --color-accent-soft: rgba(74, 124, 35, 0.12);
-  --color-text: #1c1917;
-  --color-text-muted: #57534e;
-  --color-border: #e8e6e2;
-  --color-success: #15803d;
+  --color-surface-elevated: #ffffff;
+  --color-primary: #1a4d0d;
+  --color-primary-light: #2d6b1a;
+  --color-accent: #3d7c23;
+  --color-accent-soft: rgba(61, 124, 35, 0.1);
+  --color-accent-glare: rgba(61, 124, 35, 0.06);
+  --color-text: #1a1a1a;
+  --color-text-muted: #52525b;
+  --color-border: #e4e4e7;
+  --color-border-subtle: #f4f4f5;
+  --color-success: #0d7d3d;
   --color-success-bg: #dcfce7;
-  --color-success-soft: rgba(21, 128, 61, 0.08);
+  --color-success-soft: rgba(13, 125, 61, 0.08);
   --color-warning: #b45309;
   --color-streak: #ea580c;
   --color-streak-bg: #fff7ed;
   --color-ring: #22c55e;
-  --color-cream: #f5f0e8;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --color-cream: #f5f4f0;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
-  --radius: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 22px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
   --radius-full: 9999px;
-  --shadow: 0 1px 4px rgba(45, 80, 22, 0.04);
-  --shadow-card: 0 2px 12px rgba(45, 80, 22, 0.06);
-  --shadow-card-hover: 0 8px 28px rgba(45, 80, 22, 0.1);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-card-hover: 0 12px 24px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.03);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.06);
   --safe-top: env(safe-area-inset-top, 0);
   --safe-bottom: env(safe-area-inset-bottom, 0);
-  --touch-min: 44px;
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s ease;
+  --touch-min: 48px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 * {
@@ -53,9 +59,11 @@ body {
   min-height: 100dvh;
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--color-text);
-  background: linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 30%, var(--color-cream) 100%);
+  letter-spacing: -0.01em;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, var(--color-accent-glare) 0%, transparent 50%),
+    linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 40%, var(--color-cream) 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -116,34 +124,42 @@ h1 { font-size: 1.5rem; }
 h2 { font-size: 1.25rem; }
 h3 { font-size: 1.1rem; }
 
-/* Плавное появление контента */
+/* Плавное появление контента (уважаем prefers-reduced-motion) */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.96); }
+  from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes pulse-soft {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.85; }
+  50% { opacity: 0.88; }
 }
 
 @keyframes ring-glow {
   0%, 100% { filter: drop-shadow(0 0 0 transparent); }
-  50% { filter: drop-shadow(0 0 8px var(--color-ring)); }
+  50% { filter: drop-shadow(0 0 10px var(--color-ring)); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.35s ease forwards;
+  animation: fadeIn 0.4s var(--ease-out) forwards;
 }
 
-.animate-delay-1 { animation-delay: 0.05s; }
-.animate-delay-2 { animation-delay: 0.1s; }
-.animate-delay-3 { animation-delay: 0.15s; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.animate-delay-1 { animation-delay: 0.06s; }
+.animate-delay-2 { animation-delay: 0.12s; }
+.animate-delay-3 { animation-delay: 0.18s; }
+.animate-delay-4 { animation-delay: 0.24s; }
 
 /* Экран ошибки (Error Boundary) */
 .error-fallback {

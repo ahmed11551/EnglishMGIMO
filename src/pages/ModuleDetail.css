@@ -1,13 +1,13 @@
 .module-detail {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.4s var(--ease-out, ease) forwards;
 }
 
 .module-detail-header {
   color: #fff;
-  padding: 28px 20px;
-  border-radius: 0 0 24px 24px;
-  margin: 0 -16px 24px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px 22px;
+  border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+  margin: 0 -18px 26px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   position: relative;
   overflow: hidden;
 }

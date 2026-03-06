@@ -156,7 +156,16 @@ export function Trainer() {
       </div>
       {showResult && (
         <div className="trainer-feedback">
-          {correct ? <span className="trainer-feedback-ok">Верно!</span> : <span className="trainer-feedback-fail">Правильно: {currentCard.translation}</span>}
+          {correct ? (
+            <span className="trainer-feedback-ok">Верно!</span>
+          ) : (
+            <div className="trainer-feedback-fail-wrap">
+              <span className="trainer-feedback-fail-label">Правильный ответ:</span>
+              <p className="trainer-feedback-fail" aria-live="polite">
+                <strong>{currentCard.term}</strong> — {currentCard.translation}
+              </p>
+            </div>
+          )}
           <button type="button" className="btn btn-primary" onClick={handleNext}>
             {queueIndex + 1 >= queue.length ? 'Завершить' : 'Далее'}
           </button>

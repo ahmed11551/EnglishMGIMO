@@ -30,8 +30,8 @@ export default defineConfig({
         name: 'МГИМО ENGLISH',
         short_name: 'МГИМО ENGLISH',
         description: 'Профессиональная лексика: дипломатия, ООН, переговоры',
-        theme_color: '#2d5016',
-        background_color: '#f5f3ef',
+        theme_color: '#1a4d0d',
+        background_color: '#f6f5f3',
         icons: [
           { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
           { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },

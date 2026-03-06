@@ -1,6 +1,43 @@
 # Деплой на Vercel и настройка Telegram-бота
 
-Пошаговая инструкция: развернуть приложение на Vercel и подключить бота, который открывает Mini App по кнопке.
+Пошаговая инструкция: развернуть приложение на Vercel и подключить бота @EnglishMgimo_bot (Mini App + слова дня).
+
+---
+
+## Полная настройка бота за 3 шага
+
+Если приложение уже задеплоено на **https://english-mgimo.vercel.app**:
+
+### Шаг 1. Переменные в Vercel
+1. Vercel → ваш проект → **Settings** → **Environment Variables**.
+2. Добавьте:
+   - `BOT_TOKEN` = токен бота (из чата с @BotFather).
+   - `APP_URL` = `https://english-mgimo.vercel.app`
+3. Сохраните и сделайте **Redeploy** (Deployments → ⋮ → Redeploy).
+
+### Шаг 2. Включить вебхук
+**Вариант А — скрипт (рекомендуется):**
+1. В корне проекта скопируйте `.env.example` в `.env`.
+2. В `.env` вставьте свой `BOT_TOKEN` (и при необходимости измените `APP_URL`).
+3. Выполните: `npm install` (если ещё не ставили), затем `npm run set-webhook`.
+4. В консоли должно появиться: «Вебхук успешно установлен.»
+
+**Вариант Б — вручную:** откройте в браузере (подставьте свой токен):
+```
+https://api.telegram.org/bot<ВАШ_BOT_TOKEN>/setWebhook?url=https://english-mgimo.vercel.app/api/webhook
+```
+В ответ: `{"ok":true,"result":true}`.
+
+### Шаг 3. BotFather
+1. [@BotFather](https://t.me/BotFather) → **Bot Settings** → **Menu Button** → URL: `https://english-mgimo.vercel.app`
+2. По желанию: **/setcommands** и вставьте:
+```
+start - Начать и открыть приложение
+words - Слова дня (5 новых слов)
+app - Открыть приложение МГИМО ENGLISH
+```
+
+Готово. Напишите боту [@EnglishMgimo_bot](https://t.me/EnglishMgimo_bot) **/start** — должны прийти кнопки и слова дня.
 
 ---
 
@@ -40,7 +77,7 @@
 Самый простой вариант — кнопка рядом с полем ввода в чате с ботом:
 1. В [@BotFather](https://t.me/BotFather) отправьте: `/mybots`.
 2. Выберите вашего бота → **Bot Settings** → **Menu Button** → **Configure menu button**.
-3. Укажите URL вашего приложения: `https://ваш-проект.vercel.app` (без слэша в конце).
+3. Укажите URL приложения: `https://english-mgimo.vercel.app` (без слэша в конце).
 4. При необходимости введите текст кнопки (например: **Открыть приложение**).
 
 После этого у пользователей в чате с ботом рядом с полем ввода появится кнопка, открывающая Mini App.
@@ -57,7 +94,7 @@
    - **Name:** `BOT_TOKEN`  
      **Value:** ваш токен от BotFather (скопируйте из чата с BotFather после создания бота).
    - **Name:** `APP_URL`  
-     **Value:** оставьте пустым до деплоя; после публикации сайта укажите URL приложения, например `https://ваш-проект.vercel.app` (без слэша в конце). Пока не задан — берётся из заголовков запроса при вызове вебхука.
+     **Value:** `https://english-mgimo.vercel.app` (URL приложения; без слэша в конце).
 
 Сохраните и сделайте **Redeploy** проекта, чтобы переменные применились.
 
@@ -65,19 +102,19 @@
 Отправьте один раз в браузере или через `curl` (подставьте свой токен и домен):
 
 ```
-https://api.telegram.org/bot<ВАШ_BOT_TOKEN>/setWebhook?url=https://ваш-проект.vercel.app/api/webhook
+https://api.telegram.org/bot<ВАШ_BOT_TOKEN>/setWebhook?url=https://english-mgimo.vercel.app/api/webhook
 ```
 
-Пример:
+Пример для нашего бота:
 ```
-https://api.telegram.org/bot123456789:AAHxxxx/setWebhook?url=https://mgimo-english.vercel.app/api/webhook
+https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://english-mgimo.vercel.app/api/webhook
 ```
 
 В ответ должно прийти: `{"ok":true,"result":true,...}`.
 
 ### 3.3 Как это работает
 - В проекте есть серверная функция **`api/webhook.js`** (Vercel Serverless).
-- Telegram при каждом обновлении (сообщение, команда, нажатие кнопки) отправляет POST на `https://ваш-проект.vercel.app/api/webhook`.
+- Telegram при каждом обновлении (сообщение, команда, нажатие кнопки) отправляет POST на `https://english-mgimo.vercel.app/api/webhook`.
 - При команде **/start** бот отправляет приветствие и кнопки: **«Открыть приложение»** и **«Слова дня»**.
 - При команде **/words** или нажатии **«Слова дня»** бот присылает 5 терминов с переводом и примером (одни и те же слова в течение дня).
 - Кнопка **«Ещё 5 слов»** под сообщением выдаёт случайную порцию слов.
@@ -106,8 +143,8 @@ app - Открыть приложение МГИМО ENGLISH
 | 2 | Подключить репозиторий к Vercel, задеплоить |
 | 3 | Проверить URL приложения в браузере |
 | 4 | В BotFather создать бота, сохранить токен |
-| 5 | В BotFather: Menu Button → URL приложения (`https://ваш-проект.vercel.app`) |
-| 6 | (Опционально) В Vercel задать `BOT_TOKEN` и `APP_URL`, вызвать `setWebhook` на `.../api/webhook` |
+| 5 | В BotFather: Menu Button → URL приложения (`https://english-mgimo.vercel.app`) |
+| 6 | В Vercel задать `BOT_TOKEN` и `APP_URL=https://english-mgimo.vercel.app`, вызвать `setWebhook`: `.../setWebhook?url=https://english-mgimo.vercel.app/api/webhook` |
 | 7 | (Опционально) В BotFather: `/setcommands` — start, words, app |
 
 После этого пользователи смогут открыть Mini App по кнопке меню и получать **слова дня** в чате с ботом (команда /words или кнопка «Слова дня»).

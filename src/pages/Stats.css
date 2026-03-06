@@ -11,9 +11,9 @@
   padding: 22px 20px;
   margin-bottom: 8px;
   background: var(--color-surface);
-  border-radius: 16px;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-card);
 }
 
 .stats-row {
