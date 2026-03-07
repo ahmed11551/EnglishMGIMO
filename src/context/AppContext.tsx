@@ -47,6 +47,7 @@ interface AppContextValue extends AppState {
   getModuleStats: (moduleId: string) => ModuleStats;
   getCalendarDays: (days: number) => { date: string; count: number }[];
   getTodayCardIds: () => { cardId: string; moduleId: string }[];
+  getRecentlyLearnedCardIds: (limit?: number) => { cardId: string; moduleId: string }[];
 }
 
 const defaultState: AppState = {
@@ -206,6 +207,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return pool.slice(0, state.dailyGoal);
   }, [state.progress, state.dailyGoal]);
 
+  const getRecentlyLearnedCardIds = useCallback((limit = 10): { cardId: string; moduleId: string }[] => {
+    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const entries = Array.from(state.progress.values())
+      .filter((p) => (p.lastReviewedAt ?? 0) >= weekAgo)
+      .sort((a, b) => (b.lastReviewedAt ?? 0) - (a.lastReviewedAt ?? 0))
+      .slice(0, limit)
+      .map((p) => ({ cardId: p.cardId, moduleId: p.moduleId }));
+    return entries;
+  }, [state.progress]);
+
   const value = useMemo<AppContextValue>(
     () => ({
       ...state,
@@ -222,8 +233,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       getModuleStats,
       getCalendarDays,
       getTodayCardIds,
+      getRecentlyLearnedCardIds,
     }),
-    [state, learnedToday, streak, setTelegramId, setLastModuleId, setDailyGoal, resetProgress, recordReview, getProgress, getDueForModule, refreshFromStorage, getModuleStats, getCalendarDays, getTodayCardIds]
+    [state, learnedToday, streak, setTelegramId, setLastModuleId, setDailyGoal, resetProgress, recordReview, getProgress, getDueForModule, refreshFromStorage, getModuleStats, getCalendarDays, getTodayCardIds, getRecentlyLearnedCardIds]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

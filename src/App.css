@@ -71,6 +71,24 @@
   opacity: 0.8;
 }
 
+.header-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -8px -8px -8px 0;
+  color: var(--color-primary);
+  text-decoration: none;
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+}
+.header-search:hover {
+  text-decoration: none;
+  background: var(--color-accent-soft);
+  opacity: 1;
+}
+
 .app-main {
   flex: 0 0 auto;
   padding: 20px 18px;

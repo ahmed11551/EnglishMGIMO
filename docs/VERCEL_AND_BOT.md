@@ -1,6 +1,6 @@
 # Деплой на Vercel и настройка Telegram-бота
 
-Пошаговая инструкция: развернуть приложение на Vercel и подключить бота @EnglishMgimo_bot (Mini App + слова дня).
+Пошаговая инструкция: развернуть приложение на Vercel и подключить бота @EnglishMgimo_bot (Mini App, слова дня, режимы «Учить» и «Квиз»).
 
 ---
 
@@ -32,12 +32,15 @@ https://api.telegram.org/bot<ВАШ_BOT_TOKEN>/setWebhook?url=https://english-mg
 1. [@BotFather](https://t.me/BotFather) → **Bot Settings** → **Menu Button** → URL: `https://english-mgimo.vercel.app`
 2. По желанию: **/setcommands** и вставьте:
 ```
-start - Начать и открыть приложение
-words - Слова дня (5 новых слов)
-app - Открыть приложение МГИМО ENGLISH
+start - Начать
+help - Помощь и команды
+words - Слова дня (5 слов)
+learn - Учить по одному слову
+quiz - Квиз: угадай перевод
+app - Открыть приложение
 ```
 
-Готово. Напишите боту [@EnglishMgimo_bot](https://t.me/EnglishMgimo_bot) **/start** — должны прийти кнопки и слова дня.
+Готово. Напишите боту [@EnglishMgimo_bot](https://t.me/EnglishMgimo_bot) **/start** — появятся кнопки: Слова дня, Учить, Квиз, Приложение.
 
 ---
 

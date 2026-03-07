@@ -1,5 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden width="22" height="22">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
+
 const APP_NAME = 'МГИМО ENGLISH';
 const titles: Record<string, string> = {
   '/': APP_NAME,
@@ -13,6 +22,7 @@ function getTitle(pathname: string): string {
   if (pathname.startsWith('/topics')) return titles['/topics'] ?? 'Темы';
   if (pathname.startsWith('/stats')) return titles['/stats'] ?? 'Прогресс';
   if (pathname.startsWith('/settings')) return titles['/settings'] ?? 'Настройки';
+  if (pathname.startsWith('/search')) return 'Поиск';
   if (pathname.startsWith('/privacy')) return 'Политика конфиденциальности';
   if (pathname.startsWith('/terms')) return 'Пользовательское соглашение';
   if (pathname.includes('/flash')) return 'Флэш-карты';
@@ -38,6 +48,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </Link>
         )}
         <h1>{title}</h1>
+        {(location.pathname === '/' || location.pathname.startsWith('/topics')) && (
+          <Link to="/search" className="header-search" aria-label="Поиск по словарю">
+            <SearchIcon />
+          </Link>
+        )}
       </header>
       <main className="app-main" id="main-content">
         {children}

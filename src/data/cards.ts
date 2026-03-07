@@ -16,13 +16,13 @@ export const CARDS: Card[] = [
   { id: 'dc-9', term: 'chargé d\'affaires', translation: 'поверенный в делах', transcription: tr(''), examples: ['The chargé d\'affaires represented the embassy.'] },
   { id: 'dc-10', term: 'ambassador', translation: 'посол', transcription: tr(''), examples: ['The ambassador presented his credentials.'] },
   { id: 'dc-11', term: 'diplomatic service', translation: 'дипломатическая служба', transcription: tr(''), examples: ['He joined the diplomatic service in 2010.'] },
-  { id: 'dc-12', term: 'summit', translation: 'саммит', transcription: tr(''), examples: ['The G20 summit will discuss climate.'] },
-  { id: 'dc-13', term: 'negotiation', translation: 'переговоры', transcription: tr(''), examples: ['Negotiations between the parties resumed.'] },
+  { id: 'dc-12', term: 'summit', translation: 'саммит', transcription: tr(''), examples: ['The G20 summit will discuss climate.', 'Leaders met at the summit to talk about trade.'] },
+  { id: 'dc-13', term: 'negotiation', translation: 'переговоры', transcription: tr(''), examples: ['Negotiations between the parties resumed.', 'After long negotiations, they finally signed the deal.'] },
   { id: 'dc-14', term: 'conflict resolution', translation: 'разрешение конфликтов', transcription: tr(''), examples: ['Conflict resolution is a key UN mandate.'] },
   { id: 'dc-15', term: 'propaganda', translation: 'пропаганда', transcription: tr(''), examples: ['Propaganda was used during the war.'] },
   { id: 'dc-16', term: 'coup d\'état', translation: 'переворот', transcription: tr(''), examples: ['The coup d\'état overthrew the government.'] },
   { id: 'dc-17', term: 'political asylum', translation: 'политическое убежище', transcription: tr(''), examples: ['He was granted political asylum.'] },
-  { id: 'dc-18', term: 'visa', translation: 'виза', transcription: tr(''), examples: ['A visa is required for entry.'] },
+  { id: 'dc-18', term: 'visa', translation: 'виза', transcription: tr(''), examples: ['A visa is required for entry.', 'I need to renew my visa before the trip.'] },
   { id: 'dc-19', term: 'immigration', translation: 'иммиграция', transcription: tr(''), examples: ['Immigration policy is under debate.'] },
   { id: 'dc-20', term: 'cultural diplomacy', translation: 'культурная дипломатия', transcription: tr(''), examples: ['Cultural diplomacy builds bridges between nations.'] },
   { id: 'dc-21', term: 'mission', translation: 'миссия', transcription: tr(''), examples: ['The diplomatic mission opened in 2020.'] },
@@ -30,7 +30,7 @@ export const CARDS: Card[] = [
   { id: 'un-1', term: 'UN', translation: 'ООН', transcription: tr(''), examples: ['The UN was founded in 1945.'] },
   { id: 'un-2', term: 'Security Council', translation: 'Совет Безопасности ООН', transcription: tr(''), examples: ['The Security Council adopted a resolution.'] },
   { id: 'un-3', term: 'NATO', translation: 'НАТО', transcription: tr(''), examples: ['NATO is a military alliance.'] },
-  { id: 'un-4', term: 'resolution', translation: 'резолюция', transcription: tr(''), examples: ['The resolution was adopted by 14 votes.'] },
+  { id: 'un-4', term: 'resolution', translation: 'резолюция', transcription: tr(''), examples: ['The resolution was adopted by 14 votes.', 'What does the resolution say about sanctions?'] },
   { id: 'un-5', term: 'peacekeeping', translation: 'миротворчество', transcription: tr(''), examples: ['Peacekeeping forces were deployed.'] },
   { id: 'un-6', term: 'EU', translation: 'Европейский союз', transcription: tr(''), examples: ['The EU has 27 member states.'] },
   { id: 'un-7', term: 'CIS', translation: 'СНГ', transcription: tr(''), examples: ['The CIS was established in 1991.'] },
@@ -39,7 +39,7 @@ export const CARDS: Card[] = [
   { id: 'un-10', term: 'BRICS', translation: 'БРИКС', transcription: tr(''), examples: ['BRICS brings together major emerging economies.'] },
   { id: 'un-11', term: 'IMF', translation: 'МВФ', transcription: tr(''), examples: ['The IMF provides financial assistance.'] },
   { id: 'un-12', term: 'World Bank', translation: 'Всемирный банк', transcription: tr(''), examples: ['The World Bank funds development projects.'] },
-  { id: 'un-13', term: 'WTO', translation: 'ВТО', transcription: tr(''), examples: ['The WTO regulates global trade.'] },
+  { id: 'un-13', term: 'WTO', translation: 'ВТО', transcription: tr(''), examples: ['The WTO regulates global trade.', 'WTO disputes often take years to resolve.'] },
   { id: 'un-14', term: 'UNESCO', translation: 'ЮНЕСКО', transcription: tr(''), examples: ['UNESCO protects cultural heritage.'] },
   { id: 'un-15', term: 'WHO', translation: 'ВОЗ', transcription: tr(''), examples: ['The WHO coordinates global health.'] },
   { id: 'un-16', term: 'IAEA', translation: 'МАГАТЭ', transcription: tr(''), examples: ['The IAEA monitors nuclear programmes.'] },
@@ -48,8 +48,8 @@ export const CARDS: Card[] = [
   { id: 'un-19', term: 'International Court of Justice', translation: 'Международный суд ООН', transcription: tr(''), examples: ['The ICJ settles disputes between states.'] },
   { id: 'un-20', term: 'Council of Europe', translation: 'Совет Европы', transcription: tr(''), examples: ['The Council of Europe upholds human rights.'] },
   // ——— Кризисы и безопасность (crisis) ———
-  { id: 'cr-1', term: 'ceasefire', translation: 'прекращение огня', transcription: tr(''), examples: ['The parties agreed to a ceasefire.'] },
-  { id: 'cr-2', term: 'mediation', translation: 'посредничество', transcription: tr(''), examples: ['UN offered its good offices for mediation.'] },
+  { id: 'cr-1', term: 'ceasefire', translation: 'прекращение огня', transcription: tr(''), examples: ['The parties agreed to a ceasefire.', 'The ceasefire held for three days before fighting resumed.'] },
+  { id: 'cr-2', term: 'mediation', translation: 'посредничество', transcription: tr(''), examples: ['UN offered its good offices for mediation.', 'We need a neutral party for mediation.'] },
   { id: 'cr-3', term: 'sanctions', translation: 'санкции', transcription: tr(''), examples: ['Sanctions were imposed by the Security Council.'] },
   { id: 'cr-4', term: 'embargo', translation: 'эмбарго', transcription: tr(''), examples: ['An arms embargo was introduced.'] },
   { id: 'cr-5', term: 'refugee', translation: 'беженец', transcription: tr(''), examples: ['Refugees fled the conflict zone.'] },
@@ -57,7 +57,7 @@ export const CARDS: Card[] = [
   { id: 'cr-7', term: 'war crimes', translation: 'военные преступления', transcription: tr(''), examples: ['War crimes were documented.'] },
   { id: 'cr-8', term: 'genocide', translation: 'геноцид', transcription: tr(''), examples: ['The convention prohibits genocide.'] },
   { id: 'cr-9', term: 'internally displaced person', translation: 'внутренне перемещённое лицо', transcription: tr(''), examples: ['IDPs need protection and assistance.'] },
-  { id: 'cr-10', term: 'peace treaty', translation: 'мирный договор', transcription: tr(''), examples: ['A peace treaty was signed.'] },
+  { id: 'cr-10', term: 'peace treaty', translation: 'мирный договор', transcription: tr(''), examples: ['A peace treaty was signed.', 'The peace treaty ended the war.'] },
   { id: 'cr-11', term: 'arms control', translation: 'контроль над вооружениями', transcription: tr(''), examples: ['Arms control talks resumed.'] },
   { id: 'cr-12', term: 'non-proliferation', translation: 'нераспространение', transcription: tr(''), examples: ['Nuclear non-proliferation is a priority.'] },
   { id: 'cr-13', term: 'counter-terrorism', translation: 'борьба с терроризмом', transcription: tr(''), examples: ['Counter-terrorism cooperation increased.'] },
@@ -80,15 +80,15 @@ export const CARDS: Card[] = [
   // ——— Основы МО (basics) ———
   { id: 'b-1', term: 'international relations', translation: 'международные отношения', transcription: tr(''), examples: ['International relations is a broad field.'] },
   { id: 'b-2', term: 'regional studies', translation: 'регионоведение', transcription: tr(''), examples: ['Regional studies focus on specific areas.'] },
-  { id: 'b-3', term: 'diplomacy', translation: 'дипломатия', transcription: tr(''), examples: ['Diplomacy is the art of negotiation.'] },
-  { id: 'b-4', term: 'geopolitics', translation: 'геополитика', transcription: tr(''), examples: ['Geopolitics shapes foreign policy.'] },
+  { id: 'b-3', term: 'diplomacy', translation: 'дипломатия', transcription: tr(''), examples: ['Diplomacy is the art of negotiation.', 'Quiet diplomacy can often achieve more than public pressure.'] },
+  { id: 'b-4', term: 'geopolitics', translation: 'геополитика', transcription: tr(''), examples: ['Geopolitics shapes foreign policy.', 'Current geopolitics favor regional alliances.'] },
   { id: 'b-5', term: 'globalization', translation: 'глобализация', transcription: tr(''), examples: ['Globalization affects all countries.'] },
   { id: 'b-6', term: 'sovereignty', translation: 'суверенитет', transcription: tr(''), examples: ['Sovereignty is a key principle of international law.'] },
   { id: 'b-7', term: 'independence', translation: 'независимость', transcription: tr(''), examples: ['The country gained independence in 1991.'] },
   { id: 'b-8', term: 'international security', translation: 'международная безопасность', transcription: tr(''), examples: ['International security was discussed at the summit.'] },
   { id: 'b-9', term: 'migration', translation: 'миграция', transcription: tr(''), examples: ['Migration flows have increased.'] },
   { id: 'b-10', term: 'international organizations', translation: 'международные организации', transcription: tr(''), examples: ['International organizations play a key role.'] },
-  { id: 'b-11', term: 'foreign policy', translation: 'внешняя политика', transcription: tr(''), examples: ['Foreign policy priorities were set.'] },
+  { id: 'b-11', term: 'foreign policy', translation: 'внешняя политика', transcription: tr(''), examples: ['Foreign policy priorities were set.', 'The new government shifted its foreign policy.'] },
   { id: 'b-12', term: 'soft power', translation: 'мягкая сила', transcription: tr(''), examples: ['Soft power relies on culture and values.'] },
   { id: 'b-13', term: 'international law', translation: 'международное право', transcription: tr(''), examples: ['International law binds states.'] },
   { id: 'b-14', term: 'intervention', translation: 'вмешательство', transcription: tr(''), examples: ['Humanitarian intervention was debated.'] },
@@ -149,7 +149,7 @@ export const CARDS: Card[] = [
   { id: 'ec-1', term: 'GDP', translation: 'ВВП', transcription: tr(''), examples: ['GDP growth slowed down.'] },
   { id: 'ec-2', term: 'export', translation: 'экспорт', transcription: tr(''), examples: ['Export revenues increased.'] },
   { id: 'ec-3', term: 'import', translation: 'импорт', transcription: tr(''), examples: ['Import restrictions were lifted.'] },
-  { id: 'ec-4', term: 'free trade', translation: 'свободная торговля', transcription: tr(''), examples: ['Free trade agreements were signed.'] },
+  { id: 'ec-4', term: 'free trade', translation: 'свободная торговля', transcription: tr(''), examples: ['Free trade agreements were signed.', 'Free trade benefits consumers through lower prices.'] },
   { id: 'ec-5', term: 'protectionism', translation: 'протекционизм', transcription: tr(''), examples: ['Protectionism harms global trade.'] },
   { id: 'ec-6', term: 'tariff', translation: 'тариф', transcription: tr(''), examples: ['Tariffs were imposed on steel.'] },
   { id: 'ec-7', term: 'quota', translation: 'квота', transcription: tr(''), examples: ['Import quotas were set.'] },
@@ -182,7 +182,7 @@ export const CARDS: Card[] = [
   { id: 'ec-34', term: 'social mobility', translation: 'социальная мобильность', transcription: tr(''), examples: ['Social mobility varies across societies.'] },
   { id: 'ec-35', term: 'access to education', translation: 'доступ к образованию', transcription: tr(''), examples: ['Access to education is a fundamental right.'] },
   // ——— Право (law) ———
-  { id: 'lw-1', term: 'treaty', translation: 'договор', transcription: tr(''), examples: ['The treaty was ratified.'] },
+  { id: 'lw-1', term: 'treaty', translation: 'договор', transcription: tr(''), examples: ['The treaty was ratified.', 'Under the treaty, both sides must reduce their forces.'] },
   { id: 'lw-2', term: 'convention', translation: 'конвенция', transcription: tr(''), examples: ['The convention entered into force.'] },
   { id: 'lw-3', term: 'ratification', translation: 'ратификация', transcription: tr(''), examples: ['Ratification by parliament is required.'] },
   { id: 'lw-4', term: 'diplomatic immunity', translation: 'дипломатический иммунитет', transcription: tr(''), examples: ['Diplomatic immunity protects envoys.'] },
@@ -191,7 +191,7 @@ export const CARDS: Card[] = [
   { id: 'lw-7', term: 'visa regime', translation: 'визовый режим', transcription: tr(''), examples: ['The visa regime was simplified.'] },
   { id: 'lw-8', term: 'extradition', translation: 'экстрадиция', transcription: tr(''), examples: ['Extradition was requested.'] },
   { id: 'lw-9', term: 'arbitration', translation: 'арбитраж', transcription: tr(''), examples: ['The dispute went to arbitration.'] },
-  { id: 'lw-10', term: 'human rights', translation: 'права человека', transcription: tr(''), examples: ['Human rights must be protected.'] },
+  { id: 'lw-10', term: 'human rights', translation: 'права человека', transcription: tr(''), examples: ['Human rights must be protected.', 'The report focuses on human rights violations.'] },
   { id: 'lw-11', term: 'Universal Declaration of Human Rights', translation: 'Всеобщая декларация прав человека', transcription: tr(''), examples: ['The UDHR was adopted in 1948.'] },
   { id: 'lw-12', term: 'right to self-determination', translation: 'право на самоопределение', transcription: tr(''), examples: ['The right to self-determination is recognized.'] },
   { id: 'lw-13', term: 'gender equality', translation: 'гендерное равенство', transcription: tr(''), examples: ['Gender equality is a priority.'] },
@@ -228,7 +228,7 @@ export const CARDS: Card[] = [
   { id: 'so-14', term: 'custom', translation: 'обычай', transcription: tr(''), examples: ['Local customs were respected.'] },
   { id: 'so-15', term: 'public diplomacy', translation: 'публичная дипломатия', transcription: tr(''), examples: ['Public diplomacy engages foreign audiences.'] },
   { id: 'so-16', term: 'refugee crisis', translation: 'кризис беженцев', transcription: tr(''), examples: ['The refugee crisis required a joint response.'] },
-  { id: 'so-17', term: 'climate change', translation: 'изменение климата', transcription: tr(''), examples: ['Climate change affects us all.'] },
+  { id: 'so-17', term: 'climate change', translation: 'изменение климата', transcription: tr(''), examples: ['Climate change affects us all.', 'Climate change will be discussed at the summit.'] },
   { id: 'so-18', term: 'sustainability', translation: 'устойчивое развитие', transcription: tr(''), examples: ['Sustainability is a long-term goal.'] },
   { id: 'so-19', term: 'healthcare system', translation: 'система здравоохранения', transcription: tr(''), examples: ['The healthcare system was reformed.'] },
   { id: 'so-20', term: 'welfare', translation: 'благосостояние, соцобеспечение', transcription: tr(''), examples: ['Welfare programmes support the vulnerable.'] },
@@ -293,7 +293,7 @@ export const CARDS: Card[] = [
   { id: 'ph-6', term: 'to state an opinion', translation: 'высказать мнение', transcription: tr(''), examples: ['He stated his opinion clearly.'] },
   { id: 'ph-7', term: 'to ask for opinion', translation: 'спросить мнение', transcription: tr(''), examples: ['May I ask for your opinion?'] },
   { id: 'ph-8', term: 'to make small talk', translation: 'вести светскую беседу', transcription: tr(''), examples: ['They made small talk at the reception.'] },
-  { id: 'ph-9', term: 'We have reached an agreement', translation: 'мы пришли к соглашению', transcription: tr(''), examples: ['We have reached an agreement.'] },
+  { id: 'ph-9', term: 'We have reached an agreement', translation: 'мы пришли к соглашению', transcription: tr(''), examples: ['We have reached an agreement.', 'We have reached an agreement on all key points.'] },
   { id: 'ph-10', term: 'Let\'s sum up', translation: 'давайте подведём итоги', transcription: tr(''), examples: ['Let\'s sum up the main points.'] },
   { id: 'ph-11', term: 'On the one hand... on the other hand', translation: 'с одной стороны... с другой стороны', transcription: tr(''), examples: ['On the one hand it helps; on the other it costs.'] },
   { id: 'ph-12', term: 'Evidence suggests that...', translation: 'доказательства свидетельствуют о...', transcription: tr(''), examples: ['Evidence suggests that the policy works.'] },
@@ -394,4 +394,14 @@ export function getCardsByIds(ids: string[]): Card[] {
 
 export function getCardById(id: string): Card | undefined {
   return CARDS.find((c) => c.id === id);
+}
+
+/** Поиск по term и translation (без учёта регистра) */
+export function searchCards(query: string): Card[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return CARDS.filter(
+    (c) =>
+      c.term.toLowerCase().includes(q) || c.translation.toLowerCase().includes(q)
+  );
 }

@@ -101,4 +101,44 @@ function getRandomWords(count = 5) {
   return copy.slice(0, count);
 }
 
-module.exports = { WORDS, getWordsOfDay, getRandomWords };
+/**
+ * Одно случайное слово (для режима «учить» в боте).
+ */
+function getRandomWord() {
+  return WORDS[Math.floor(Math.random() * WORDS.length)];
+}
+
+/**
+ * Слово по id (для callbacks).
+ */
+function getWordById(id) {
+  return WORDS.find((w) => w.id === id) || null;
+}
+
+/**
+ * Вопрос для квиза: слово + 4 варианта перевода (1 верный, 3 неверных).
+ * @returns {{ word: object, options: Array<{ text: string, callbackData: string }>, correctIndex: number }}
+ */
+function getQuizQuestion() {
+  const word = getRandomWord();
+  const others = WORDS.filter((w) => w.id !== word.id);
+  const wrong = [];
+  while (wrong.length < 3 && others.length > 0) {
+    const i = Math.floor(Math.random() * others.length);
+    wrong.push(others[i].translation);
+    others.splice(i, 1);
+  }
+  const options = [{ text: word.translation, correct: true }, ...wrong.map((t) => ({ text: t, correct: false }))];
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  const correctIndex = options.findIndex((o) => o.correct);
+  const optionsWithData = options.map((o, idx) => ({
+    text: o.text,
+    callbackData: `quiz_${word.id}__${correctIndex}__${idx}`.slice(0, 64),
+  }));
+  return { word, options: optionsWithData, correctIndex };
+}
+
+module.exports = { WORDS, getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion };

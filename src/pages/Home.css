@@ -220,6 +220,28 @@
   line-height: 1.4;
 }
 
+.home-recently {
+  margin-bottom: 24px;
+}
+
+.home-recently-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 12px;
+}
+
+.home-recently-list {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border-subtle);
+}
+
 .home-streak {
   display: inline-flex;
   align-items: center;

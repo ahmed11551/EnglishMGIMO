@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { MODULES } from '../data/modules';
 import { useApp } from '../context/AppContext';
 import { getCardById } from '../data/cards';
-import { getGreeting, getRandomGoalPhrase, getRandomTip } from '../utils/greeting';
+import { getGreeting, getRandomGoalPhrase, getRandomTip, getRandomEmptyPhrase } from '../utils/greeting';
 import { EmptyStateIllustration } from '../components/EmptyStateIllustration';
 import { IconLightning, IconCalendar, IconBook, IconFolder, IconFlame, IconModule } from '../components/Icons';
 import './Home.css';
@@ -11,7 +11,7 @@ import './Home.css';
 const ESTIMATED_MINUTES = 5; // как в 10 Minute English / WRD — короткая сессия
 
 export function Home() {
-  const { getModuleStats, dailyGoal, learnedToday, streak, getCalendarDays, getTodayCardIds, lastModuleId } = useApp();
+  const { getModuleStats, dailyGoal, learnedToday, streak, getCalendarDays, getTodayCardIds, getRecentlyLearnedCardIds, lastModuleId } = useApp();
   const calendarDays = [...getCalendarDays(7)].reverse();
   const todayCards = getTodayCardIds();
   const progressPct = Math.min(100, (learnedToday / dailyGoal) * 100);
@@ -23,11 +23,13 @@ export function Home() {
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   })();
 
+  const recentlyLearned = getRecentlyLearnedCardIds(10);
   const goalReached = learnedToday >= dailyGoal && dailyGoal > 0;
   const hasNoProgress = learnedToday === 0 && todayCards.length === 0;
   const greeting = getGreeting();
   const goalPhrase = useMemo(() => getRandomGoalPhrase(), []);
   const dailyTip = useMemo(() => getRandomTip(), []);
+  const emptyPhrase = useMemo(() => getRandomEmptyPhrase(), []);
 
   return (
     <div className="home home-easyten">
@@ -150,7 +152,29 @@ export function Home() {
             <EmptyStateIllustration />
           </div>
           <p className="home-words-empty-text">Выберите модуль ниже и начните с 10 слов в день</p>
-          <p className="home-words-empty-tip">5 минут — и вы уже молодеете в глазах преподавателя</p>
+          <p className="home-words-empty-tip">{emptyPhrase}</p>
+        </section>
+      )}
+
+      {recentlyLearned.length > 0 && (
+        <section className="home-recently animate-fade-in animate-delay-3">
+          <h3 className="home-recently-title">
+            <span className="home-section-icon" aria-hidden><IconBook /></span>
+            Недавно выученные
+          </h3>
+          <ul className="home-words-list home-recently-list">
+            {recentlyLearned.slice(0, 8).map(({ cardId, moduleId }) => {
+              const card = getCardById(cardId);
+              const mod = MODULES.find((m) => m.id === moduleId);
+              return card ? (
+                <li key={cardId} className="home-word-item">
+                  <span className="home-word-term">{card.term}</span>
+                  <span className="home-word-translation">{card.translation}</span>
+                  {mod && <span className="home-word-module" style={{ color: mod.coverColor }}>{mod.titleRu}</span>}
+                </li>
+              ) : null;
+            })}
+          </ul>
         </section>
       )}
 

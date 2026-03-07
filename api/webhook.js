@@ -1,10 +1,9 @@
 /**
  * Telegram Bot Webhook — МГИМО ENGLISH.
- * Команды: /start (приветствие + кнопки), /words (слова дня), /app (открыть приложение).
- * В Vercel: BOT_TOKEN и при необходимости APP_URL в Environment Variables.
+ * Команды: /start, /words (слова дня), /learn (учить по одному слову), /quiz (квиз), /app (открыть приложение).
  */
 
-const { getWordsOfDay, getRandomWords } = require('./wordsData');
+const { getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion } = require('./wordsData');
 
 function getAppUrl(req) {
   const host = req.headers['x-forwarded-host'] || req.headers.host || '';
@@ -47,6 +46,25 @@ async function sendMessage(token, chatId, text, replyMarkup = null) {
   return data;
 }
 
+async function editMessageText(token, chatId, messageId, text, replyMarkup = null) {
+  const body = {
+    chat_id: chatId,
+    message_id: messageId,
+    text,
+    parse_mode: 'HTML',
+    disable_web_page_preview: true,
+  };
+  if (replyMarkup) body.reply_markup = replyMarkup;
+  const res = await fetch(`https://api.telegram.org/bot${token}/editMessageText`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!data.ok) console.error('Telegram API editMessageText error:', data);
+  return data;
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ ok: false });
@@ -73,30 +91,53 @@ module.exports = async function handler(req, res) {
     }
 
     const isStart = text === '/start' || text === '/start start';
+    const isHelp = /^\/help(@\w+)?$/i.test(text);
     const isWords = /^\/words(@\w+)?$/i.test(text) || /^(слова дня|новые слова|слова|ещё слова)$/i.test(text);
+    const isLearn = /^\/learn(@\w+)?$/i.test(text) || /^(учить|учиться|обучение|слово)$/i.test(text);
+    const isQuiz = /^\/quiz(@\w+)?$/i.test(text) || /^(квиз|тест|проверка)$/i.test(text);
     const isApp = /^\/app(@\w+)?$/i.test(text);
 
-    if (isStart) {
+    if (isStart || isHelp) {
       const welcomeText =
         '👋 <b>МГИМО ENGLISH</b>\n\n' +
-        'Профессиональная лексика по международным отношениям: дипломатия, ООН, переговоры, право.\n\n' +
-        '• <b>10 слов в день</b> в приложении — флэш-карты, тренажёр, интервальное повторение.\n' +
-        '• Здесь в боте — <b>слова дня</b>: получайте порцию новых слов прямо в чат.\n\n' +
-        'Нажмите кнопку ниже или команду /words для слов дня.';
+        'Профессиональная лексика: дипломатия, ООН, переговоры, право.\n\n' +
+        '• <b>Слова дня</b> — порция слов в чат (/words)\n' +
+        '• <b>Учить</b> — по одному слову с переводом (/learn)\n' +
+        '• <b>Квиз</b> — проверка перевода (/quiz)\n' +
+        '• <b>Приложение</b> — флэш-карты, тренажёр, интервальное повторение.';
 
       const keyboard = {
-        inline_keyboard: [[{ text: '📝 Слова дня', callback_data: 'words_day' }]],
+        inline_keyboard: [
+          [{ text: '📝 Слова дня', callback_data: 'words_day' }, { text: '📖 Учить', callback_data: 'learn_next' }],
+          [{ text: '🎯 Квиз', callback_data: 'quiz_next' }, ...(appUrl ? [{ text: '📱 Приложение', web_app: { url: appUrl } }] : [])],
+        ],
       };
-      if (appUrl) {
-        keyboard.inline_keyboard.unshift([{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]);
-      }
       await sendMessage(token, chatId, welcomeText, keyboard);
+    } else if (isLearn) {
+      const word = getRandomWord();
+      const msg = `📖 <b>Как переводится?</b>\n\n<code>${escapeHtml(word.term)}</code>`;
+      const keyboard = {
+        inline_keyboard: [
+          [
+            { text: 'Показать перевод', callback_data: `learn_show_${word.id}` },
+            { text: 'Следующее →', callback_data: 'learn_next' },
+          ],
+        ],
+      };
+      await sendMessage(token, chatId, msg, keyboard);
+    } else if (isQuiz) {
+      const { word, options, correctIndex } = getQuizQuestion();
+      const msg = `🎯 <b>Как переводится</b> <code>${escapeHtml(word.term)}</code>?`;
+      const keyboard = {
+        inline_keyboard: [options.map((o) => ({ text: o.text, callback_data: o.callbackData }))],
+      };
+      await sendMessage(token, chatId, msg, keyboard);
     } else if (isWords) {
       const words = getWordsOfDay(5);
       const msg = formatWordsMessage(words, '📚 <b>Слова дня</b>\nПовторите эти термины в приложении.');
-      await sendMessage(token, chatId, msg, {
-        inline_keyboard: [[{ text: '📖 Открыть приложение', web_app: { url: appUrl || '#' } }]],
-      });
+      const wButtons = [[{ text: '🔄 Ещё 5 слов', callback_data: 'words_more' }]];
+      if (appUrl) wButtons.unshift([{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]);
+      await sendMessage(token, chatId, msg, { inline_keyboard: wButtons });
     } else if (isApp && appUrl) {
       await sendMessage(token, chatId, 'Откройте приложение МГИМО ENGLISH:', {
         inline_keyboard: [[{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]],
@@ -133,6 +174,52 @@ module.exports = async function handler(req, res) {
         if (appUrl) buttons.push([{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]);
         buttons.push([{ text: '🔄 Ещё 5 слов', callback_data: 'words_more' }]);
         await sendMessage(token, cbChatId, msg, { inline_keyboard: buttons });
+        await answerCb();
+      } else if (data === 'learn_next') {
+        await answerCb();
+        const word = getRandomWord();
+        const msg = `📖 <b>Как переводится?</b>\n\n<code>${escapeHtml(word.term)}</code>`;
+        await sendMessage(token, cbChatId, msg, {
+          inline_keyboard: [
+            [
+              { text: 'Показать перевод', callback_data: `learn_show_${word.id}` },
+              { text: 'Следующее →', callback_data: 'learn_next' },
+            ],
+          ],
+        });
+      } else if (data.startsWith('learn_show_')) {
+        const wordId = data.slice('learn_show_'.length);
+        const word = getWordById(wordId);
+        if (word) {
+          const ex = word.example ? `\n\n<i>${escapeHtml(word.example)}</i>` : '';
+          const msg = `📖 <b>${escapeHtml(word.term)}</b>\n\n→ ${escapeHtml(word.translation)}${ex}`;
+          await editMessageText(token, cbChatId, cb.message.message_id, msg, {
+            inline_keyboard: [[{ text: 'Следующее слово →', callback_data: 'learn_next' }]],
+          });
+        }
+        await answerCb();
+      } else if (data === 'quiz_next') {
+        await answerCb();
+        const { word, options } = getQuizQuestion();
+        const msg = `🎯 <b>Как переводится</b> <code>${escapeHtml(word.term)}</code>?`;
+        await sendMessage(token, cbChatId, msg, {
+          inline_keyboard: [options.map((o) => ({ text: o.text, callback_data: o.callbackData }))],
+        });
+      } else if (data.startsWith('quiz_')) {
+        const parts = data.split('__');
+        const questionId = (parts[0] || '').replace(/^quiz_/, '');
+        const correctIndex = parseInt(parts[1], 10);
+        const chosenIndex = parseInt(parts[2], 10);
+        const word = getWordById(questionId);
+        const isCorrect = word && correctIndex === chosenIndex;
+        const resultMsg = word
+          ? (isCorrect
+            ? `✅ <b>Верно!</b>\n\n<code>${escapeHtml(word.term)}</code> — ${escapeHtml(word.translation)}`
+            : `❌ <b>Неверно.</b> Правильно: <code>${escapeHtml(word.term)}</code> — ${escapeHtml(word.translation)}`)
+          : 'Ошибка';
+        await editMessageText(token, cbChatId, cb.message.message_id, resultMsg, {
+          inline_keyboard: [[{ text: 'Следующий вопрос →', callback_data: 'quiz_next' }]],
+        });
         await answerCb();
       }
     }
