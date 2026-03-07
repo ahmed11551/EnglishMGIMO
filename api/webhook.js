@@ -113,11 +113,11 @@ module.exports = async function handler(req, res) {
     if (isStart || isHelp) {
       const welcomeText =
         '👋 <b>МГИМО ENGLISH</b>\n\n' +
-        'Профессиональная лексика: дипломатия, ООН, переговоры, право.\n\n' +
-        '• <b>Слова дня</b> — порция слов в чат (/words)\n' +
-        '• <b>Учить</b> — по одному слову с переводом (/learn)\n' +
-        '• <b>Квиз</b> — проверка перевода (/quiz)\n' +
-        '• <b>Приложение</b> — флэш-карты, тренажёр, интервальное повторение.';
+        'Лексика для дипломатии, ООН, переговоров и международного права — учите слова прямо в чате.\n\n' +
+        '📝 <b>Слова дня</b> — 5 терминов на сегодня\n' +
+        '📖 <b>Учить</b> — по одному слову с переводом и примером\n' +
+        '🎯 <b>Квиз</b> — проверьте, как запомнили перевод\n' +
+        '📱 <b>Приложение</b> — карточки, тренажёр и интервальное повторение';
 
       const keyboard = {
         inline_keyboard: [
@@ -169,12 +169,12 @@ module.exports = async function handler(req, res) {
       await sendMessage(token, chatId, msg, keyboard);
     } else if (isWords) {
       const words = getWordsOfDay(5);
-      const msg = formatWordsMessage(words, '📚 <b>Слова дня</b>\nПовторите эти термины в приложении.');
+      const msg = formatWordsMessage(words, '📚 <b>Слова дня</b>\nПять терминов на сегодня — сохраните и повторите в приложении.');
       const wButtons = [[{ text: '🔄 Ещё 5 слов', callback_data: 'words_more' }]];
       if (appUrl) wButtons.unshift([{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]);
       await sendMessage(token, chatId, msg, { inline_keyboard: wButtons });
     } else if (isApp && appUrl) {
-      await sendMessage(token, chatId, 'Откройте приложение МГИМО ENGLISH:', {
+      await sendMessage(token, chatId, '📱 <b>МГИМО ENGLISH</b> — флэш-карты, тренажёр и прогресс. Нажмите кнопку ниже:', {
         inline_keyboard: [[{ text: '📖 Открыть приложение', web_app: { url: appUrl } }]],
       });
     } else if (body?.callback_query) {
