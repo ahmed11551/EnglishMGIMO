@@ -6,7 +6,7 @@ export function Privacy() {
   return (
     <div className="privacy-page">
       <h1>Политика конфиденциальности</h1>
-      <p className="privacy-updated">МГИМО ENGLISH. Последнее обновление: 2025.</p>
+      <p className="privacy-updated">МГИМО ENGLISH. Последнее обновление: 2026.</p>
       <section>
         <h2>1. Данные приложения</h2>
         <p>Приложение хранит прогресс обучения (выученные слова, даты повторений) локально на вашем устройстве (localStorage). При запуске через Telegram может использоваться идентификатор пользователя Telegram только для привязки данных к аккаунту.</p>
