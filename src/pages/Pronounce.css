@@ -90,8 +90,9 @@
 }
 
 .pronounce-fail {
-  color: var(--color-text-muted);
+  color: #b91c1c;
   font-size: 0.9375rem;
+  font-weight: 500;
   margin-bottom: 12px;
 }
 

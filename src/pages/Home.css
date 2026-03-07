@@ -224,6 +224,15 @@
   margin-bottom: 24px;
 }
 
+.home-recently-compact {
+  margin-bottom: 16px;
+}
+
+.home-recently-compact .home-recently-title {
+  font-size: 0.9375rem;
+  margin: 0 0 8px;
+}
+
 .home-recently-title {
   display: flex;
   align-items: center;
@@ -232,6 +241,55 @@
   font-weight: 600;
   color: var(--color-text);
   margin: 0 0 12px;
+}
+
+.home-recently-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.home-recently-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.home-recently-chip {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 160px;
+  padding: 8px 12px;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow);
+}
+
+.home-recently-chip-term {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-recently-chip-translation {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-recently-chip-module {
+  display: block;
+  font-size: 0.6875rem;
+  margin-top: 2px;
 }
 
 .home-recently-list {

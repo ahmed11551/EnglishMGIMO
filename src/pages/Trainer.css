@@ -120,8 +120,8 @@
 }
 
 .trainer-option.wrong {
-  border-color: var(--color-warning);
-  background: rgba(192, 86, 33, 0.08);
+  border-color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
   animation: trainer-wrong 0.3s ease;
 }
 
@@ -163,7 +163,8 @@
 .trainer-feedback-fail-label {
   display: block;
   font-size: 0.8125rem;
-  color: var(--color-text-muted);
+  color: #b91c1c;
+  font-weight: 500;
   margin-bottom: 6px;
 }
 

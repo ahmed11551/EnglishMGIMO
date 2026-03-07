@@ -25,6 +25,7 @@ export function Builder() {
   const [remaining, setRemaining] = useState<string[]>([]);
   const [done, setDone] = useState(false);
   const [lastSessionSize, setLastSessionSize] = useState(0);
+  const [showResult, setShowResult] = useState<'correct' | 'wrong' | null>(null);
 
   const module = MODULES.find((m) => m.id === moduleId);
   const dueIds = useMemo(() => getDueForModule(moduleId ?? ''), [moduleId, getDueForModule]);
@@ -42,6 +43,7 @@ export function Builder() {
     setPicked([]);
     setRemaining(withLetters[0]?.letters ?? []);
     setDone(false);
+    setShowResult(null);
   }, [dueIds, module]);
 
   const current = queue[index];
@@ -66,8 +68,13 @@ export function Builder() {
 
   const handleCheck = () => {
     if (!current || !module) return;
+    setShowResult(isCorrect ? 'correct' : 'wrong');
     const quality: ReviewQuality = isCorrect ? 'good' : 'again';
     recordReview(current.card.id, module.id, quality);
+  };
+
+  const handleNext = () => {
+    setShowResult(null);
     if (index + 1 >= queue.length) {
       setLastSessionSize(queue.length);
       setQueue([]);
@@ -123,24 +130,39 @@ export function Builder() {
     <div className="builder">
       <div className="builder-progress">{index + 1} / {queue.length}</div>
       <p className="builder-translation">{current.card.translation}</p>
-      <div className="builder-answer">
+      <div className={`builder-answer ${showResult === 'correct' ? 'builder-answer-correct' : ''} ${showResult === 'wrong' ? 'builder-answer-wrong' : ''}`}>
         {picked.map((letter, i) => (
-          <button key={`p-${i}-${letter}`} type="button" className="builder-letter builder-letter-picked" onClick={() => handleLetter(letter, true, i)}>
+          <button key={`p-${i}-${letter}`} type="button" className="builder-letter builder-letter-picked" onClick={() => !showResult && handleLetter(letter, true, i)} disabled={!!showResult}>
             {letter}
           </button>
         ))}
       </div>
-      <div className="builder-letters">
-        {remaining.map((letter, i) => (
-          <button key={`r-${i}-${letter}`} type="button" className="builder-letter" onClick={() => handleLetter(letter, false)}>
-            {letter}
+      {!showResult && (
+        <div className="builder-letters">
+          {remaining.map((letter, i) => (
+            <button key={`r-${i}-${letter}`} type="button" className="builder-letter" onClick={() => handleLetter(letter, false)}>
+              {letter}
+            </button>
+          ))}
+        </div>
+      )}
+      {!showResult ? (
+        <button type="button" className="btn btn-primary builder-check" onClick={handleCheck} disabled={picked.length === 0}>
+          Проверить
+        </button>
+      ) : (
+        <div className="builder-feedback-wrap">
+          {showResult === 'correct' && <p className="builder-feedback builder-feedback-correct">Верно!</p>}
+          {showResult === 'wrong' && (
+            <p className="builder-feedback builder-feedback-wrong">
+              Неверно. Правильно: <strong>{current.card.term}</strong>
+            </p>
+          )}
+          <button type="button" className="btn btn-primary builder-check" onClick={handleNext}>
+            {index + 1 >= queue.length ? 'Завершить' : 'Далее'}
           </button>
-        ))}
-      </div>
-      <button type="button" className="btn btn-primary builder-check" onClick={handleCheck} disabled={picked.length === 0}>
-        Проверить
-      </button>
-      {isCorrect && picked.length > 0 && <p className="builder-correct">Верно!</p>}
+        </div>
+      )}
       <Link to={`/module/${moduleId}`} className="builder-back btn btn-ghost">Выйти</Link>
     </div>
   );

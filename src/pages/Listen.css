@@ -74,8 +74,8 @@
 }
 
 .listen-option.wrong {
-  border-color: var(--color-warning);
-  background: rgba(192, 86, 33, 0.08);
+  border-color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
 }
 
 .listen-feedback {
@@ -94,10 +94,11 @@
 }
 
 .listen-feedback-fail {
-  color: var(--color-text-muted);
+  color: #b91c1c;
   display: block;
   margin-bottom: 12px;
   font-size: 0.9375rem;
+  font-weight: 500;
 }
 
 .listen-back {

@@ -126,6 +126,25 @@ export function Home() {
         </div>
       </section>
 
+      {recentlyLearned.length > 0 && (
+        <section className="home-recently home-recently-compact animate-fade-in animate-delay-2">
+          <h3 className="home-recently-title">Недавно выученные</h3>
+          <div className="home-recently-strip" role="list">
+            {recentlyLearned.slice(0, 4).map(({ cardId, moduleId }) => {
+              const card = getCardById(cardId);
+              const mod = MODULES.find((m) => m.id === moduleId);
+              return card ? (
+                <div key={cardId} className="home-recently-chip" role="listitem">
+                  <span className="home-recently-chip-term">{card.term}</span>
+                  <span className="home-recently-chip-translation">{card.translation}</span>
+                  {mod && <span className="home-recently-chip-module" style={{ color: mod.coverColor }}>{mod.titleRu}</span>}
+                </div>
+              ) : null;
+            })}
+          </div>
+        </section>
+      )}
+
       {todayCards.length > 0 ? (
         <section className="home-words-preview animate-fade-in animate-delay-3">
           <h3 className="home-words-title">
@@ -153,28 +172,6 @@ export function Home() {
           </div>
           <p className="home-words-empty-text">Выберите модуль ниже и начните с 10 слов в день</p>
           <p className="home-words-empty-tip">{emptyPhrase}</p>
-        </section>
-      )}
-
-      {recentlyLearned.length > 0 && (
-        <section className="home-recently animate-fade-in animate-delay-3">
-          <h3 className="home-recently-title">
-            <span className="home-section-icon" aria-hidden><IconBook /></span>
-            Недавно выученные
-          </h3>
-          <ul className="home-words-list home-recently-list">
-            {recentlyLearned.slice(0, 8).map(({ cardId, moduleId }) => {
-              const card = getCardById(cardId);
-              const mod = MODULES.find((m) => m.id === moduleId);
-              return card ? (
-                <li key={cardId} className="home-word-item">
-                  <span className="home-word-term">{card.term}</span>
-                  <span className="home-word-translation">{card.translation}</span>
-                  {mod && <span className="home-word-module" style={{ color: mod.coverColor }}>{mod.titleRu}</span>}
-                </li>
-              ) : null;
-            })}
-          </ul>
         </section>
       )}
 
