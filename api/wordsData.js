@@ -141,4 +141,4 @@ function getQuizQuestion() {
   return { word, options: optionsWithData, correctIndex };
 }
 
-module.exports = { WORDS, getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion };
+export { WORDS, getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion };

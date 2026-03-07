@@ -3,7 +3,7 @@
  * Требует: BOT_TOKEN, CRON_SECRET, Vercel KV (подписчики в ключе daily_words_subscribers).
  */
 
-const { getWordsOfDay } = require('./wordsData');
+import { getWordsOfDay } from './wordsData.js';
 
 const SUBSCRIBERS_KEY = 'daily_words_subscribers';
 
@@ -40,7 +40,7 @@ async function sendMessage(token, chatId, text) {
   return data;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   const cronSecret = process.env.CRON_SECRET;
   if (cronSecret) {
     const auth = req.headers.authorization || '';
@@ -58,7 +58,7 @@ module.exports = async function handler(req, res) {
 
   let kv;
   try {
-    const kvModule = require('@vercel/kv');
+    const kvModule = await import('@vercel/kv');
     kv = kvModule.kv;
   } catch (e) {
     res.status(500).json({ ok: false, error: 'Vercel KV not available' });

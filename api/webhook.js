@@ -4,11 +4,11 @@
  * Подписка на слова дня (вариант Б): chat_id сохраняются в Vercel KV, рассылка по крону.
  */
 
-const { getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion } = require('./wordsData');
+import { getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion } from './wordsData.js';
 
 let kv = null;
 try {
-  const kvModule = require('@vercel/kv');
+  const kvModule = await import('@vercel/kv');
   kv = kvModule.kv;
 } catch (e) {
   // Vercel KV не подключён — кнопка подписки не показывается
@@ -75,7 +75,7 @@ async function editMessageText(token, chatId, messageId, text, replyMarkup = nul
   return data;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ ok: false });
     return;
