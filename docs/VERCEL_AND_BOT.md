@@ -28,19 +28,16 @@ https://api.telegram.org/bot<ВАШ_BOT_TOKEN>/setWebhook?url=https://english-mg
 ```
 В ответ: `{"ok":true,"result":true}`.
 
-### Шаг 3. BotFather
-1. [@BotFather](https://t.me/BotFather) → **Bot Settings** → **Menu Button** → URL: `https://english-mgimo.vercel.app`
-2. По желанию: **/setcommands** и вставьте:
+### Шаг 3. Команды и кнопка меню бота
+Выполните в корне проекта (в `.env` уже должен быть `BOT_TOKEN` и `APP_URL`):
+```bash
+npm run set-commands
 ```
-start - Начать
-help - Помощь и команды
-words - Слова дня (5 слов)
-learn - Учить по одному слову
-quiz - Квиз: угадай перевод
-app - Открыть приложение
-```
+Скрипт установит список команд (видны при нажатии «/» в чате с ботом) и кнопку «Открыть приложение» рядом с полем ввода.
 
-Готово. Напишите боту [@EnglishMgimo_bot](https://t.me/EnglishMgimo_bot) **/start** — появятся кнопки: Слова дня, Учить, Квиз, Приложение.
+**Если хотите использовать нового бота:** создайте бота в [@BotFather](https://t.me/BotFather) (`/newbot`), скопируйте токен в `.env` как `BOT_TOKEN`, затем выполните `npm run set-webhook` и `npm run set-commands`. В Vercel в Environment Variables укажите тот же `BOT_TOKEN` и сделайте Redeploy.
+
+Готово. Напишите боту **/start** — появятся кнопки и команды.
 
 ---
 
@@ -125,16 +122,16 @@ https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://english-mgimo.vercel.
 
 Если вебхук не настраивать, достаточно кнопки меню из пункта 2.2 (но «Слова дня» работать не будут).
 
-### 3.4 Команды бота в меню (BotFather)
-Чтобы в чате с ботом отображался список команд:
-1. Откройте [@BotFather](https://t.me/BotFather) → выберите бота.
-2. Отправьте **/setcommands**.
-3. Вставьте список (одной строкой или по строкам):
-```
-start - Начать и открыть приложение
-words - Слова дня (5 новых слов)
-app - Открыть приложение МГИМО ENGLISH
-```
+### 3.4 Команды бота в меню
+**Рекомендуется:** в корне проекта выполнить `npm run set-commands` — скрипт сам установит команды и кнопку «Открыть приложение» через API. Альтернатива — вручную в [@BotFather](https://t.me/BotFather): **/setcommands** и вставить список из шага 3 выше.
+
+### 3.5 Если команды бота не срабатывают
+- Убедитесь, что вебхук установлен: `npm run set-webhook` (в `.env` должен быть правильный `BOT_TOKEN`).
+- В Vercel в Environment Variables заданы `BOT_TOKEN` и `APP_URL`, после их смены сделан **Redeploy**.
+- Выполните `npm run set-commands` — команды появятся в меню «/» и бот будет на них отвечать через вебхук.
+
+### 3.6 Воспроизведение (TTS) на телефоне
+В приложении добавлена разблокировка аудио по первому нажатию на «Прослушать» и выбор английского голоса. Если на вашем устройстве звук по-прежнему не воспроизводится, возможно ограничение браузера или WebView (например, в старых iOS). Попробуйте открыть приложение в Safari/Chrome по прямой ссылке и нажать «Прослушать» один раз.
 
 ---
 
@@ -147,7 +144,7 @@ app - Открыть приложение МГИМО ENGLISH
 | 3 | Проверить URL приложения в браузере |
 | 4 | В BotFather создать бота, сохранить токен |
 | 5 | В BotFather: Menu Button → URL приложения (`https://english-mgimo.vercel.app`) |
-| 6 | В Vercel задать `BOT_TOKEN` и `APP_URL=https://english-mgimo.vercel.app`, вызвать `setWebhook`: `.../setWebhook?url=https://english-mgimo.vercel.app/api/webhook` |
-| 7 | (Опционально) В BotFather: `/setcommands` — start, words, app |
+| 6 | В Vercel задать `BOT_TOKEN` и `APP_URL`, выполнить `npm run set-webhook` |
+| 7 | Выполнить `npm run set-commands` — команды и кнопка приложения в боте |
 
 После этого пользователи смогут открыть Mini App по кнопке меню и получать **слова дня** в чате с ботом (команда /words или кнопка «Слова дня»).

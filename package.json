@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "set-webhook": "node -r dotenv/config scripts/set-webhook.js"
+    "set-webhook": "node -r dotenv/config scripts/set-webhook.js",
+    "set-commands": "node -r dotenv/config scripts/set-commands.js"
   },
   "dependencies": {
     "react": "^19.2.0",
