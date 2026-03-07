@@ -11,9 +11,11 @@
     "test": "vitest",
     "test:run": "vitest run",
     "set-webhook": "node -r dotenv/config scripts/set-webhook.js",
-    "set-commands": "node -r dotenv/config scripts/set-commands.js"
+    "set-commands": "node -r dotenv/config scripts/set-commands.js",
+    "check-webhook": "node -r dotenv/config scripts/check-webhook.js"
   },
   "dependencies": {
+    "@vercel/kv": "^2.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.1.0"

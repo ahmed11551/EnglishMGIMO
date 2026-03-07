@@ -20,6 +20,8 @@ const commands = [
   { command: 'start', description: 'Начать' },
   { command: 'help', description: 'Помощь и команды' },
   { command: 'words', description: 'Слова дня (5 слов)' },
+  { command: 'subscribe', description: 'Присылать слова каждый день' },
+  { command: 'unsubscribe', description: 'Отписаться от рассылки' },
   { command: 'learn', description: 'Учить по одному слову' },
   { command: 'quiz', description: 'Квиз: угадай перевод' },
   { command: 'app', description: 'Открыть приложение' },

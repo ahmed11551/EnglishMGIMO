@@ -1,9 +1,19 @@
 /**
  * Telegram Bot Webhook — МГИМО ENGLISH.
- * Команды: /start, /words (слова дня), /learn (учить по одному слову), /quiz (квиз), /app (открыть приложение).
+ * Команды: /start, /words, /learn, /quiz, /app, /subscribe, /unsubscribe.
+ * Подписка на слова дня (вариант Б): chat_id сохраняются в Vercel KV, рассылка по крону.
  */
 
 const { getWordsOfDay, getRandomWords, getRandomWord, getWordById, getQuizQuestion } = require('./wordsData');
+
+let kv = null;
+try {
+  const kvModule = require('@vercel/kv');
+  kv = kvModule.kv;
+} catch (e) {
+  // Vercel KV не подключён — кнопка подписки не показывается
+}
+const SUBSCRIBERS_KEY = 'daily_words_subscribers';
 
 function getAppUrl(req) {
   const host = req.headers['x-forwarded-host'] || req.headers.host || '';
@@ -97,6 +107,9 @@ module.exports = async function handler(req, res) {
     const isQuiz = /^\/quiz(@\w+)?$/i.test(text) || /^(квиз|тест|проверка)$/i.test(text);
     const isApp = /^\/app(@\w+)?$/i.test(text);
 
+    const isSubscribe = /^\/subscribe(@\w+)?$/i.test(text);
+    const isUnsubscribe = /^\/unsubscribe(@\w+)?$/i.test(text);
+
     if (isStart || isHelp) {
       const welcomeText =
         '👋 <b>МГИМО ENGLISH</b>\n\n' +
@@ -112,7 +125,29 @@ module.exports = async function handler(req, res) {
           [{ text: '🎯 Квиз', callback_data: 'quiz_next' }, ...(appUrl ? [{ text: '📱 Приложение', web_app: { url: appUrl } }] : [])],
         ],
       };
+      if (kv) {
+        keyboard.inline_keyboard.push([
+          { text: '📬 Присылать слова каждый день', callback_data: 'subscribe_daily' },
+          { text: 'Отписаться от рассылки', callback_data: 'unsubscribe_daily' },
+        ]);
+      }
       await sendMessage(token, chatId, welcomeText, keyboard);
+    } else if (isSubscribe && kv) {
+      try {
+        await kv.sadd(SUBSCRIBERS_KEY, String(chatId));
+        await sendMessage(token, chatId, '✅ Вы подписаны на слова дня. Каждый день вам будет приходить порция из 5 слов. Отписаться: /unsubscribe или кнопка в /start.');
+      } catch (e) {
+        console.error('KV sadd error:', e);
+        await sendMessage(token, chatId, 'Подписка временно недоступна. Попробуйте позже.');
+      }
+    } else if (isUnsubscribe && kv) {
+      try {
+        await kv.srem(SUBSCRIBERS_KEY, String(chatId));
+        await sendMessage(token, chatId, 'Вы отписаны от рассылки. Чтобы снова получать слова дня — /subscribe или кнопка в /start.');
+      } catch (e) {
+        console.error('KV srem error:', e);
+        await sendMessage(token, chatId, 'Не удалось отписаться. Попробуйте позже.');
+      }
     } else if (isLearn) {
       const word = getRandomWord();
       const msg = `📖 <b>Как переводится?</b>\n\n<code>${escapeHtml(word.term)}</code>`;
@@ -221,6 +256,25 @@ module.exports = async function handler(req, res) {
           inline_keyboard: [[{ text: 'Следующий вопрос →', callback_data: 'quiz_next' }]],
         });
         await answerCb();
+      } else if (data === 'subscribe_daily' && kv) {
+        try {
+          await kv.sadd(SUBSCRIBERS_KEY, String(cbChatId));
+          await answerCb();
+          await sendMessage(token, cbChatId, '✅ Вы подписаны. Слова дня будут приходить каждый день. Отписаться: /unsubscribe');
+        } catch (e) {
+          console.error('KV sadd error:', e);
+          await answerCb();
+          await sendMessage(token, cbChatId, 'Подписка временно недоступна.');
+        }
+      } else if (data === 'unsubscribe_daily' && kv) {
+        try {
+          await kv.srem(SUBSCRIBERS_KEY, String(cbChatId));
+          await answerCb();
+          await sendMessage(token, cbChatId, 'Вы отписаны от рассылки.');
+        } catch (e) {
+          console.error('KV srem error:', e);
+          await answerCb();
+        }
       }
     }
   } catch (e) {

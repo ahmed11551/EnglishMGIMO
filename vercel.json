@@ -4,5 +4,11 @@
   "framework": null,
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/daily-words",
+      "schedule": "0 9 * * *"
+    }
   ]
 }
