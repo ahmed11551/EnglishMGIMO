@@ -275,6 +275,11 @@ export default async function handler(req, res) {
           console.error('KV srem error:', e);
           await answerCb();
         }
+      } else if (data === 'subscribe_daily' && !kv) {
+        await answerCb();
+        await sendMessage(token, cbChatId, 'Подписка на слова дня временно недоступна. Попробуйте позже.');
+      } else {
+        await answerCb();
       }
     }
   } catch (e) {
