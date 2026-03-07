@@ -95,7 +95,7 @@ export default async function handler(req, res) {
     const text = (message?.text || '').trim();
     const appUrl = getAppUrl(req);
 
-    if (chatId == null) {
+    if (chatId == null && !body?.callback_query) {
       res.status(200).json({ ok: true });
       return;
     }
